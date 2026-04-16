@@ -9,15 +9,18 @@ The vibe: A neon-lit digital playground where typography becomes an expression o
 ## 2. Design Language
 
 ### Aesthetic Direction
-**Dark Glassmorphism** — Deep black (#0a0a0a) background with glass-effect cards and vibrant purple-pink gradients. Premium mobile app feel with backdrop blur and subtle shadows.
+**Neon Glassmorphism** — Dark, atmospheric backgrounds with frosted glass cards that glow with vibrant gradients. The design evokes a premium mobile app feel with depth created through backdrop blur and subtle shadows.
 
 ### Color Palette
 ```
 --bg-primary: #0a0a0a          // Deep black background
---text-primary: #f0f0f0        // Light text
---bg-card: #1e1e1e             // Dark card background
---accent-gradient-start: #a855f7  // Purple
---accent-gradient-end: #ec4899   // Pink
+--bg-card: rgba(255,255,255,0.05)  // Frosted glass card
+--text-primary: #ffffff        // White main text
+--text-secondary: #a1a1aa      // Muted gray secondary text
+--accent-gradient-start: #f472b6  // Pink-500
+--accent-gradient-end: #fb923c   // Orange-400
+--glow-pink: rgba(244,114,182,0.3)
+--glow-orange: rgba(251,146,60,0.3)
 ```
 
 ### Typography
@@ -58,14 +61,13 @@ The vibe: A neon-lit digital playground where typography becomes an expression o
 │  │  text here..."              │    │
 │  └─────────────────────────────┘    │
 ├─────────────────────────────────────┤
-│  FONT STYLE GRID (3 columns desktop) │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐
-│  │ Style 1  │  │ Style 2  │  │ Style 3  │
-│  │ Preview  │  │ Preview  │  │ Preview  │
-│  │ [Copy]   │  │ [Copy]   │  │ [Copy]   │
-│  └──────────┘  └──────────┘  └──────────┘
-│  ... (52 styles, load 12 initial)      │
-│  [Load More Styles] button             │
+│  FONT STYLE GRID (2 columns mobile) │
+│  ┌──────────┐  ┌──────────┐         │
+│  │ Style 1  │  │ Style 2  │         │
+│  │ Preview  │  │ Preview  │         │
+│  │ [Copy]   │  │ [Copy]   │         │
+│  └──────────┘  └──────────┘         │
+│  ... (12 styles total)              │
 ├─────────────────────────────────────┤
 │  HOW TO USE SECTION                │
 │  3 steps: Type → Generate → Copy   │
@@ -93,17 +95,9 @@ The vibe: A neon-lit digital playground where typography becomes an expression o
 - Clear button (X icon) appears when text exists
 
 #### 4.2 Font Style Generation
-- 52 Unicode font styles, each with:
-  - **Category**: Basic, Decorative, Combining, Numbers, or Extra
+- 12 Unicode font styles, each with:
   - **Style Name**: Descriptive label (e.g., "Bold Script")
   - **Preview**: Converted text displayed in card
-  - **Copy Button**: Gradient button with copy icon
-
-#### 4.3 Load More
-- Initial display: 12 styles
-- Load More button: Shows 8 more styles per click
-- Progress indicator: "Showing X of 52 styles"
-- All loaded indicator: "All styles loaded (52 styles)" when complete
   - **Copy Button**: Gradient button with copy icon
 - Styles update instantly as input changes
 
