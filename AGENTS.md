@@ -1,6 +1,10 @@
-# 项目上下文
+# Viral Fonts - Unicode Font Generator
 
-### 版本技术栈
+## 项目概述
+
+Viral Fonts 是一个免费的在线 Unicode 字体生成器，用于社交媒体（Instagram、TikTok 等）的个性文本创作。
+
+## 版本技术栈
 
 - **Framework**: Next.js 16 (App Router)
 - **Core**: React 19
@@ -19,10 +23,20 @@
 │   └── start.sh            # 生产环境启动脚本
 ├── src/
 │   ├── app/                # 页面路由与布局
-│   ├── components/ui/      # Shadcn UI 组件库
-│   ├── hooks/              # 自定义 Hooks
-│   ├── lib/                # 工具库
-│   │   └── utils.ts        # 通用工具函数 (cn)
+│   ├── components/         # 业务组件
+│   │   ├── Header.tsx     # 页头组件
+│   │   ├── TextInput.tsx  # 文本输入组件
+│   │   ├── FontCard.tsx   # 字体卡片组件
+│   │   ├── FontGrid.tsx   # 字体网格组件
+│   │   ├── CopyToast.tsx  # 复制成功提示组件
+│   │   ├── HowToSection.tsx   # 使用说明组件
+│   │   ├── AboutSection.tsx   # 关于 Unicode 组件
+│   │   └── Footer.tsx    # 页脚组件
+│   ├── components/ui/     # Shadcn UI 组件库
+│   ├── hooks/             # 自定义 Hooks
+│   ├── lib/               # 工具库
+│   │   ├── utils.ts       # 通用工具函数 (cn)
+│   │   └── fonts.ts       # Unicode 字体映射
 │   └── server.ts           # 自定义服务端入口
 ├── next.config.ts          # Next.js 配置
 ├── package.json            # 项目依赖管理
