@@ -4,31 +4,17 @@ import { useState, useCallback } from 'react';
 import { Sparkles, Type, Wand2, Copy } from 'lucide-react';
 import { TextInput } from '@/components/TextInput';
 import { FontGrid } from '@/components/FontGrid';
-import { CopyToast, useCopyToast } from '@/components/CopyToast';
+import { CopyToast } from '@/components/CopyToast';
 import { fontStyles } from '@/lib/fonts';
 
 export default function Home() {
   const [inputText, setInputText] = useState('');
+  const [showToast, setShowToast] = useState(false);
   const [styleCount, setStyleCount] = useState({ shown: 12, total: fontStyles.length });
-  const { toast, showToast, hideToast } = useCopyToast();
 
-  const handleCopy = useCallback(async (text: string, position: { x: number; y: number }) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      showToast('Copied!', position);
-    } catch (err) {
-      // Fallback for older browsers
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      showToast('Copied!', position);
-    }
-  }, [showToast]);
+  const handleCopy = useCallback(() => {
+    setShowToast(true);
+  }, []);
 
   const handleCountChange = useCallback((shown: number, total: number) => {
     setStyleCount({ shown, total });
@@ -40,13 +26,6 @@ export default function Home() {
       <div className="gradient-orb gradient-orb-purple fixed -left-60 -top-60 h-[500px] w-[500px]" />
       <div className="gradient-orb gradient-orb-pink fixed -bottom-60 -right-60 h-[500px] w-[500px]" />
       <div className="gradient-orb gradient-orb-orange fixed left-1/3 top-1/2 h-[400px] w-[400px] -translate-y-1/2" />
-
-      {/* Toast notification */}
-      <CopyToast
-        message={toast.message}
-        position={toast.position}
-        onComplete={hideToast}
-      />
 
       {/* Content */}
       <div className="relative z-10">
@@ -69,7 +48,7 @@ export default function Home() {
           {/* Hero Section */}
           <section className="mb-10 text-center">
             <p className="mb-6 text-sm text-zinc-400 sm:text-base">
-              Transform your text into {fontStyles.length}+ unique font styles. Click any style to copy. Perfect for Instagram bios, TikTok captions, and more.
+              Transform your text into {fontStyles.length}+ unique font styles. Perfect for Instagram bios, TikTok captions, and more.
             </p>
             <TextInput value={inputText} onChange={setInputText} />
           </section>
@@ -101,7 +80,7 @@ export default function Home() {
                 {[
                   { icon: Type, title: 'Type', description: 'Enter your text in the input field above' },
                   { icon: Wand2, title: 'Generate', description: 'Browse through 52+ unique font styles' },
-                  { icon: Copy, title: 'Copy', description: 'Click any style to copy it instantly' },
+                  { icon: Copy, title: 'Copy', description: 'Click to copy and paste anywhere' },
                 ].map((step, index) => (
                   <div
                     key={step.title}
@@ -120,7 +99,7 @@ export default function Home() {
                     <h3 className="mb-2 text-lg font-semibold text-[#f0f0f0]">
                       {step.title}
                     </h3>
-                    <p className="text-sm text-zinc-500">
+                    <p className="text-sm text-zinc-400">
                       {step.description}
                     </p>
                   </div>
@@ -131,37 +110,47 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section className="border-t border-white/5 py-16">
+        <section className="border-t border-white/5 bg-black/20 py-16 backdrop-blur-xl">
           <div className="mx-auto max-w-4xl px-4">
-            <h2 className="mb-6 text-center text-2xl font-bold text-[#f0f0f0]">
-              About Unicode Fonts
-            </h2>
-            <div className="rounded-2xl border border-white/5 bg-[#111111] p-6 text-zinc-400">
-              <p className="mb-4">
-                Unicode is a universal character encoding standard that supports over 143,000 characters from 154 scripts. Many Unicode blocks include stylistic variations of Latin letters that appear as different fonts.
-              </p>
-              <p className="mb-4">
-                Our generator uses these Unicode characters to transform your plain text into stylized text that works in most apps and social media platforms, including Instagram, TikTok, Twitter, Facebook, and more.
-              </p>
-              <p>
-                No sign-up required. All transformations happen instantly in your browser. Your text is never sent to any server.
-              </p>
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <Sparkles className="h-5 w-5 text-purple-400" />
+              <h2 className="text-2xl font-bold text-[#f0f0f0]">
+                About Unicode Fonts
+              </h2>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 p-6" style={{ backgroundColor: '#1e1e1e' }}>
+              <div className="prose prose-invert prose-sm max-w-none space-y-4 text-zinc-300">
+                <p>
+                  Unicode is a universal character encoding standard that assigns a unique number to every character, regardless of platform, program, or language. While most people only see basic Latin letters (A-Z, a-z), Unicode actually includes thousands of different character sets from languages around the world.
+                </p>
+                <p>
+                  <strong className="text-[#f0f0f0]">How it works:</strong> Each Unicode font style you see below uses a different block of Unicode characters. For example, the bold letters use the &quot;Mathematical Alphanumeric Symbols&quot; block (U+1D400 to U+1D7FF), while the circled letters use enclosed alphanumeric characters (U+2460 to U+24FF).
+                </p>
+                <p>
+                  <strong className="text-[#f0f0f0]">Compatibility:</strong> Since these are standard Unicode characters, they work in most apps and platforms that support Unicode text — including Instagram, TikTok, Twitter, Discord, and more. No special fonts or plugins needed!
+                </p>
+                <p>
+                  <strong className="text-[#f0f0f0]">Tip:</strong> Not all Unicode characters are supported everywhere. If a character shows up as a box or question mark, that platform does not support that particular Unicode block.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-white/5 bg-black/50 py-8">
-          <div className="mx-auto max-w-6xl px-4 text-center">
-            <div className="mb-4 flex items-center justify-center gap-2">
-              <Sparkles className="h-5 w-5 text-purple-400" />
-              <span className="text-lg font-bold text-[#f0f0f0]">Viral Fonts</span>
-            </div>
+        <footer className="border-t border-white/5 bg-black/40 py-8">
+          <div className="mx-auto max-w-4xl px-4 text-center">
             <p className="text-sm text-zinc-500">
-              Free Unicode font generator for social media. No signup required.
+              &copy; {new Date().getFullYear()} Viral Fonts. Made with love for creative minds.
+            </p>
+            <p className="mt-2 text-xs text-zinc-600">
+              Create stunning text for your social media bios, captions, and stories.
             </p>
           </div>
         </footer>
+
+        <CopyToast show={showToast} />
       </div>
     </div>
   );
