@@ -1,12 +1,12 @@
 export interface FontStyle {
   id: string;
   name: string;
-  description: string;
+  category: string;
 }
 
-// Unicode character mapping for 12 font styles
-const charMaps = {
-  // Mathematical Bold (𝗔-𝗭)
+// Unicode character mappings for 52 font styles
+const charMaps: Record<string, Record<string, string>> = {
+  // 1. Bold
   bold: {
     a: '𝗮', b: '𝗯', c: '𝗰', d: '𝗱', e: '𝗲', f: '𝗳', g: '𝗴', h: '𝗵', i: '𝗶', j: '𝗷', k: '𝗸', l: '𝗹', m: '𝗺',
     n: '𝗻', o: '𝗼', p: '𝗽', q: '𝗾', r: '𝗿', s: '𝘀', t: '𝘁', u: '𝘂', v: '𝘃', w: '𝘄', x: '𝘅', y: '𝘆', z: '𝘇',
@@ -15,7 +15,7 @@ const charMaps = {
     0: '𝟬', 1: '𝟭', 2: '𝟮', 3: '𝟯', 4: '𝟰', 5: '𝟱', 6: '𝟲', 7: '𝟳', 8: '𝟴', 9: '𝟵',
   },
 
-  // Mathematical Italic (𝘈-𝘡)
+  // 2. Italic
   italic: {
     a: '𝘢', b: '𝘣', c: '𝘤', d: '𝘥', e: '𝘦', f: '𝘧', g: '𝘨', h: '𝘩', i: '𝘪', j: '𝘫', k: '𝘬', l: '𝘭', m: '𝘮',
     n: '𝘯', o: '𝘰', p: '𝘱', q: '𝘲', r: '𝘳', s: '𝘴', t: '𝘵', u: '𝘶', v: '𝘷', w: '𝘸', x: '𝘹', y: '𝘺', z: '𝘻',
@@ -23,57 +23,43 @@ const charMaps = {
     N: '𝘕', O: '𝘖', P: '𝘗', Q: '𝘘', R: '𝘙', S: '𝘚', T: '𝘛', U: '𝘜', V: '𝘝', W: '𝘞', X: '𝘟', Y: '𝘠', Z: '𝘡',
   },
 
-  // Mathematical Bold Italic (𝘼-𝙕)
+  // 3. Bold Italic
   boldItalic: {
     a: '𝙖', b: '𝙗', c: '𝙘', d: '𝙙', e: '𝙚', f: '𝙛', g: '𝙜', h: '𝙝', i: '𝙞', j: '𝙟', k: '𝙠', l: '𝙡', m: '𝙢',
     n: '𝙣', o: '𝙤', p: '𝙥', q: '𝙦', r: '𝙧', s: '𝙨', t: '𝙩', u: '𝙪', v: '𝙫', w: '𝙬', x: '𝙭', y: '𝙮', z: '𝙯',
     A: '𝘼', B: '𝘽', C: '𝘾', D: '𝘿', E: '𝙀', F: '𝙁', G: '𝙂', H: '𝙃', I: '𝙄', J: '𝙅', K: '𝙆', L: '𝙇', M: '𝙈',
-    N: '𝙉', O: '𝙊', P: '𝙋', Q: '𝙌', R: '𝙍', S: '𝙎', T: '𝙏', U: '𝙐', V: '𝙑', W: '𝙒', X: '𝙓', Y: '𝙔', Z: '𝙕',
+    N: '𝙉', O: '𝙊', P: '𝙋', Q: '𝙌', R: '𝙍', S: '𝙎', T: '𝙏', U: '𝙐', V: '𝙑', W: '𝙒', X: '𝙓', Y: '𝙔', Z: '𝙍',
   },
 
-  // Script (𝒜-𝒵)
-  script: {
-    a: '𝒶', b: '𝒷', c: '𝒸', d: '𝒹', e: 'ℯ', f: '𝒻', g: 'ℊ', h: '𝒽', i: '𝒾', j: '𝒿', k: '𝓀', l: '𝓁', m: '𝓂',
-    n: '𝓃', o: 'ℴ', p: '𝓅', q: '𝓆', r: '𝓇', s: '𝓈', t: '𝓉', u: '𝓊', v: '𝓋', w: '𝓌', x: '𝓍', y: '𝓎', z: '𝓏',
-    A: '𝒜', B: 'ℬ', C: '𝒞', D: '𝒟', E: 'ℰ', F: 'ℱ', G: '𝒢', H: 'ℋ', I: 'ℐ', J: '𝒥', K: '𝒦', L: 'ℒ', M: 'ℳ',
-    N: '𝒩', O: '𝒪', P: '𝒫', Q: '𝒬', R: 'ℛ', S: '𝒮', T: '𝒯', U: '𝒰', V: '𝒱', W: '𝒲', X: '𝒳', Y: '𝒴', Z: '𝒵',
+  // 4. Small Caps
+  smallCaps: {
+    a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ',
+    n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'Q', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: 'x', y: 'ʏ', z: 'ᴢ',
+    A: 'ᴀ', B: 'ʙ', C: 'ᴄ', D: 'ᴅ', E: 'ᴇ', F: 'ꜰ', G: 'ɢ', H: 'ʜ', I: 'ɪ', J: 'ᴊ', K: 'ᴋ', L: 'ʟ', M: 'ᴍ',
+    N: 'ɴ', O: 'ᴏ', P: 'ᴘ', Q: 'Q', R: 'ʀ', S: 'ꜱ', T: 'ᴛ', U: 'ᴜ', V: 'ᴠ', W: 'ᴡ', X: 'x', Y: 'ʏ', Z: 'ᴢ',
   },
 
-  // Bold Script (𝓐-𝔃)
-  boldScript: {
-    a: '𝓪', b: '𝓫', c: '𝓬', d: '𝓭', e: '𝓮', f: '𝓯', g: '𝓰', h: '𝓱', i: '𝓲', j: '𝓳', k: '𝓴', l: '𝓵', m: '𝓶',
-    n: '𝓷', o: '𝓸', p: '𝓹', q: '𝓺', r: '𝓻', s: '𝓼', t: '𝓽', u: '𝓾', v: '𝓿', w: '𝔀', x: '𝔁', y: '𝔂', z: '𝔃',
-    A: '𝓐', B: '𝓑', C: '𝓒', D: '𝓓', E: '𝓔', F: '𝓕', G: '𝓖', H: '𝓗', I: '𝓘', J: '𝓙', K: '𝓚', L: '𝓛', M: '𝓜',
-    N: '𝓝', O: '𝓞', P: '𝓟', Q: '𝓠', R: '𝓡', S: '𝓢', T: '𝓣', U: '𝓤', V: '𝓥', W: '𝓦', X: '𝓧', Y: '𝓨', Z: '𝓩',
+  // 5. Superscript
+  superscript: {
+    a: 'ᵃ', b: 'ᵇ', c: 'ᶜ', d: 'ᵈ', e: 'ᵉ', f: 'ᶠ', g: 'ᵍ', h: 'ʰ', i: 'ⁱ', j: 'ʲ', k: 'ᵏ', l: 'ˡ', m: 'ᵐ',
+    n: 'ⁿ', o: 'ᵒ', p: 'ᵖ', q: 'ᵠ', r: 'ʳ', s: 'ˢ', t: 'ᵗ', u: 'ᵘ', v: 'ᵛ', w: 'ʷ', x: 'ˣ', y: 'ʸ', z: 'ᶻ',
+    A: 'ᴬ', B: 'ᴮ', C: 'ᶜ', D: 'ᴰ', E: 'ᴱ', F: 'ᶠ', G: 'ᴳ', H: 'ᴴ', I: 'ᴵ', J: 'ᴶ', K: 'ᴷ', L: 'ᴸ', M: 'ᴹ',
+    N: 'ᴺ', O: 'ᴼ', P: 'ᴾ', Q: 'ᵠ', R: 'ᴿ', S: 'ˢ', T: 'ᵀ', U: 'ᵁ', V: 'ⱽ', W: 'ᵂ', X: 'ˣ', Y: 'ʸ', Z: 'ᶻ',
+    0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹',
+    '(': '⁽', ')': '⁾', '+': '⁺', '-': '⁻', '=': '⁼',
   },
 
-  // Fraktur (𝔄-𝔃)
-  fraktur: {
-    a: '𝔞', b: '𝔟', c: '𝔠', d: '𝔡', e: '𝔢', f: '𝔣', g: '𝔤', h: '𝔥', i: '𝔦', j: '𝔧', k: '𝔨', l: '𝔩', m: '𝔪',
-    n: '𝔫', o: '𝔬', p: '𝔭', q: '𝔮', r: '𝔯', s: '𝔰', t: '𝔱', u: '𝔲', v: '𝔳', w: '𝔴', x: '𝔵', y: '𝔶', z: '𝔷',
-    A: '𝔄', B: '𝔅', C: 'ℭ', D: '𝔇', E: '𝔈', F: '𝔉', G: '𝔊', H: 'ℌ', I: 'ℑ', J: '𝔍', K: '𝔎', L: '𝔏', M: '𝔐',
-    N: '𝔑', O: '𝔒', P: '𝔓', Q: '𝔔', R: 'ℜ', S: '𝔖', T: '𝔗', U: '𝔘', V: '𝔙', W: '𝔚', X: '𝔛', Y: '𝔜', Z: 'ℨ',
+  // 6. Subscript
+  subscript: {
+    a: 'ₐ', b: 'ᵦ', c: '꜀', d: 'ᵈ', e: 'ₑ', f: 'ᶠ', g: 'ᵍ', h: 'ₕ', i: 'ᵢ', j: 'ⱼ', k: 'ₖ', l: 'ₗ', m: 'ₘ',
+    n: 'ₙ', o: 'ₒ', p: 'ₚ', q: 'ᵠ', r: 'ᵣ', s: 'ₛ', t: 'ₜ', u: 'ᵤ', v: 'ᵥ', w: 'w', x: 'ₓ', y: 'ᵧ', z: 'ᵨ',
+    A: 'ₐ', B: 'ᵦ', C: '꜀', D: 'ᵈ', E: 'ₑ', F: 'ᶠ', G: 'ᵍ', H: 'ₕ', I: 'ᵢ', J: 'ⱼ', K: 'ₖ', L: 'ₗ', M: 'ₘ',
+    N: 'ₙ', O: 'ₒ', P: 'ₚ', Q: 'ᵠ', R: 'ᵣ', S: 'ₛ', T: 'ₜ', U: 'ᵤ', V: 'ᵥ', W: 'w', X: 'ₓ', Y: 'ᵧ', Z: 'ᵨ',
+    0: '₀', 1: '₁', 2: '₂', 3: '₃', 4: '₄', 5: '₅', 6: '₆', 7: '₇', 8: '₈', 9: '₉',
+    '+': '₊', '-': '₋', '=': '₌', '(': '₍', ')': '₎',
   },
 
-  // Double Struck (𝔸-𝕫)
-  doubleStruck: {
-    a: '𝕒', b: '𝕓', c: '𝕔', d: '𝕕', e: '𝕖', f: '𝕗', g: '𝕘', h: '𝕙', i: '𝕚', j: '𝕛', k: '𝕜', l: '𝕝', m: '𝕞',
-    n: '𝕟', o: '𝕠', p: '𝕡', q: '𝕢', r: '𝕣', s: '𝕤', t: '𝕥', u: '𝕦', v: '𝕧', w: '𝕨', x: '𝕩', y: '𝕪', z: '𝕫',
-    A: '𝔸', B: '𝔹', C: 'ℂ', D: '𝔻', E: '𝔼', F: '𝔽', G: '𝔾', H: 'ℍ', I: '𝕀', J: '𝕁', K: '𝕂', L: '𝕃', M: '𝕄',
-    N: 'ℕ', O: '𝕆', P: 'ℙ', Q: 'ℚ', R: 'ℝ', S: '𝕊', T: '𝕋', U: '𝕌', V: '𝕍', W: '𝕎', X: '𝕏', Y: '𝕐', Z: 'ℤ',
-    0: '𝟘', 1: '𝟙', 2: '𝟚', 3: '𝟛', 4: '𝟜', 5: '𝟝', 6: '𝟞', 7: '𝟟', 8: '𝟠', 9: '𝟡',
-  },
-
-  // Sans Serif (𝖠-𝗭)
-  sansSerif: {
-    a: '𝖺', b: '𝖻', c: '𝖼', d: '𝖽', e: '𝖾', f: '𝖿', g: '𝗀', h: '𝗁', i: '𝗂', j: '𝗃', k: '𝗄', l: '𝗅', m: '𝗆',
-    n: '𝗇', o: '𝗈', p: '𝗉', q: '𝗊', r: '𝗋', s: '𝗌', t: '𝗍', u: '𝗎', v: '𝗏', w: '𝗐', x: '𝗑', y: '𝗒', z: '𝗓',
-    A: '𝖠', B: '𝖡', C: '𝖢', D: '𝖣', E: '𝖤', F: '𝖥', G: '𝖦', H: '𝖧', I: '𝖨', J: '𝖩', K: '𝖪', L: '𝖫', M: '𝖬',
-    N: '𝖭', O: '𝖮', P: '𝖯', Q: '𝖰', R: '𝖱', S: '𝖲', T: '𝖳', U: '𝖴', V: '𝖵', W: '𝖶', X: '𝖷', Y: '𝖸', Z: '𝖹',
-    0: '𝟢', 1: '𝟣', 2: '𝟤', 3: '𝟥', 4: '𝟦', 5: '𝟧', 6: '𝟨', 7: '𝟩', 8: '𝟪', 9: '𝟫',
-  },
-
-  // Monospace (𝙰-𝚉)
+  // 7. Monospace
   monospace: {
     a: '𝚊', b: '𝚋', c: '𝚌', d: '𝚍', e: '𝚎', f: '𝚏', g: '𝚐', h: '𝚑', i: '𝚒', j: '𝚓', k: '𝚔', l: '𝚕', m: '𝚖',
     n: '𝚗', o: '𝚘', p: '𝚙', q: '𝚚', r: '𝚛', s: '𝚜', t: '𝚝', u: '𝚞', v: '𝚟', w: '𝚠', x: '𝚡', y: '𝚢', z: '𝚣',
@@ -82,7 +68,140 @@ const charMaps = {
     0: '𝟶', 1: '𝟷', 2: '𝟸', 3: '𝟹', 4: '𝟺', 5: '𝟻', 6: '𝟼', 7: '𝟽', 8: '𝟾', 9: '𝟿',
   },
 
-  // Squared (🄰-🅉)
+  // 8. Sans Serif
+  sansSerif: {
+    a: '𝖺', b: '𝖻', c: '𝖼', d: '𝖽', e: '𝖾', f: '𝖿', g: '𝗀', h: '𝗁', i: '𝗂', j: '𝗃', k: '𝗄', l: '𝗅', m: '𝗆',
+    n: '𝗇', o: '𝗈', p: '𝗉', q: '𝗊', r: '𝗋', s: '𝗌', t: '𝗍', u: '𝗎', v: '𝗏', w: '𝗐', x: '𝗑', y: '𝗒', z: '𝗓',
+    A: '𝖠', B: '𝖡', C: '𝖢', D: '𝖣', E: '𝖤', F: '𝖥', G: '𝖦', H: '𝖧', I: '𝖨', J: '𝖩', K: '𝖪', L: '𝖫', M: '𝖬',
+    N: '𝖭', O: '𝖮', P: '𝖯', Q: '𝖰', R: '𝖱', S: '𝖲', T: '𝖳', U: '𝖴', V: '𝖵', W: '𝖶', X: '𝖷', Y: '𝖸', Z: '𝖹',
+  },
+
+  // 9. Sans Serif Bold
+  sansSerifBold: {
+    a: '𝗮', b: '𝗯', c: '𝗰', d: '𝗱', e: '𝗲', f: '𝗳', g: '𝗴', h: '𝗵', i: '𝗶', j: '𝗷', k: '𝗸', l: '𝗹', m: '𝗺',
+    n: '𝗻', o: '𝗼', p: '𝗽', q: '𝗾', r: '𝗿', s: '𝘀', t: '𝘁', u: '𝘂', v: '𝘃', w: '𝘄', x: '𝘅', y: '𝘆', z: '𝘇',
+    A: '𝗔', B: '𝗕', C: '𝗖', D: '𝗗', E: '𝗘', F: '𝗙', G: '𝗚', H: '𝗛', I: '𝗜', J: '𝗝', K: '𝗞', L: '𝗟', M: '𝗠',
+    N: '𝗡', O: '𝗢', P: '𝗣', Q: '𝗤', R: '𝗥', S: '𝗦', T: '𝗧', U: '𝗨', V: '𝗩', W: '𝗪', X: '𝗫', Y: '𝗬', Z: '𝗭',
+    0: '𝟬', 1: '𝟭', 2: '𝟮', 3: '𝟯', 4: '𝟰', 5: '𝟱', 6: '𝟲', 7: '𝟳', 8: '𝟴', 9: '𝟵',
+  },
+
+  // 10. Sans Serif Italic
+  sansSerifItalic: {
+    a: '𝘢', b: '𝘣', c: '𝘤', d: '𝘥', e: '𝘦', f: '𝘧', g: '𝘨', h: '𝘩', i: '𝘪', j: '𝘫', k: '𝘬', l: '𝘭', m: '𝘮',
+    n: '𝘯', o: '𝘰', p: '𝘱', q: '𝘲', r: '𝘳', s: '𝘴', t: '𝘵', u: '𝘶', v: '𝘷', w: '𝘸', x: '𝘹', y: '𝘺', z: '𝘻',
+    A: '𝘈', B: '𝘉', C: '𝘊', D: '𝘋', E: '𝘌', F: '𝘍', G: '𝘎', H: '𝘏', I: '𝘐', J: '𝘑', K: '𝘒', L: '𝘓', M: '𝘔',
+    N: '𝘕', O: '𝘖', P: '𝘗', Q: '𝘘', R: '𝘙', S: '𝘚', T: '𝘛', U: '𝘜', V: '𝘝', W: '𝘞', X: '𝘟', Y: '𝘠', Z: '𝘡',
+  },
+
+  // 11. Sans Serif Bold Italic
+  sansSerifBoldItalic: {
+    a: '𝙖', b: '𝙗', c: '𝙘', d: '𝙙', e: '𝙚', f: '𝙛', g: '𝙜', h: '𝙝', i: '𝙞', j: '𝙟', k: '𝙠', l: '𝙡', m: '𝙢',
+    n: '𝙣', o: '𝙤', p: '𝙥', q: '𝙦', r: '𝙧', s: '𝙨', t: '𝙩', u: '𝙪', v: '𝙫', w: '𝙬', x: '𝙭', y: '𝙮', z: '𝙯',
+    A: '𝘼', B: '𝘽', C: '𝘾', D: '𝘿', E: '𝙀', F: '𝙁', G: '𝙂', H: '𝙃', I: '𝙄', J: '𝙅', K: '𝙆', L: '𝙇', M: '𝙈',
+    N: '𝙉', O: '𝙊', P: '𝙋', Q: '𝙌', R: '𝙍', S: '𝙎', T: '𝙏', U: '𝙐', V: '𝙑', W: '𝙒', X: '𝙓', Y: '𝙔', Z: '𝙍',
+  },
+
+  // 12. Serif
+  serif: {
+    a: '𝔞', b: '𝔟', c: '𝔠', d: '𝔡', e: '𝔢', f: '𝔣', g: '𝔤', h: '𝔥', i: '𝔦', j: '𝔧', k: '𝔨', l: '𝔩', m: '𝔪',
+    n: '𝔫', o: '𝔬', p: '𝔭', q: '𝔮', r: '𝔯', s: '𝔰', t: '𝔱', u: '𝔲', v: '𝔳', w: '𝔴', x: '𝔵', y: '𝔶', z: '𝔷',
+    A: '𝔄', B: '𝔅', C: 'ℭ', D: '𝔇', E: '𝔈', F: '𝔉', G: '𝔊', H: 'ℌ', I: 'ℑ', J: '𝔍', K: '𝔎', L: '𝔏', M: '𝔐',
+    N: '𝔑', O: '𝔒', P: '𝔓', Q: '𝔔', R: 'ℜ', S: '𝔖', T: '𝔗', U: '𝔘', V: '𝔙', W: '𝔚', X: '𝔛', Y: '𝔜', Z: 'ℨ',
+  },
+
+  // 13. Serif Bold
+  serifBold: {
+    a: '𝐚', b: '𝐛', c: '𝐜', d: '𝐝', e: '𝐞', f: '𝐟', g: '𝐠', h: '𝐡', i: '𝐢', j: '𝐣', k: '𝐤', l: '𝐥', m: '𝐦',
+    n: '𝐧', o: '𝐨', p: '𝐩', q: '𝐪', r: '𝐫', s: '𝐬', t: '𝐭', u: '𝐮', v: '𝐯', w: '𝐰', x: '𝐱', y: '𝐲', z: '𝐳',
+    A: '𝐀', B: '𝐁', C: '𝐂', D: '𝐃', E: '𝐄', F: '𝐅', G: '𝐆', H: '𝐇', I: '𝐈', J: '𝐉', K: '𝐊', L: '𝐋', M: '𝐌',
+    N: '𝐍', O: '𝐎', P: '𝐏', Q: '𝐐', R: '𝐑', S: '𝐒', T: '𝐓', U: '𝐔', V: '𝐕', W: '𝐖', X: '𝐗', Y: '𝐘', Z: '𝐙',
+  },
+
+  // 14. Serif Italic
+  serifItalic: {
+    a: '𝑎', b: '𝑏', c: '𝑐', d: '𝑑', e: '𝑒', f: '𝑓', g: '𝑔', h: 'ℎ', i: '𝑖', j: '𝑗', k: '𝑘', l: '𝑙', m: '𝑚',
+    n: '𝑛', o: '𝑜', p: '𝑝', q: '𝑞', r: '𝑟', s: '𝑠', t: '𝑡', u: '𝑢', v: '𝑣', w: '𝑤', x: '𝑥', y: '𝑦', z: '𝑧',
+    A: '𝐴', B: '𝐵', C: '𝐶', D: '𝐷', E: '𝐸', F: '𝐹', G: '𝐺', H: '𝐻', I: '𝐼', J: '𝐽', K: '𝐾', L: '𝐿', M: '𝑀',
+    N: '𝑁', O: '𝑂', P: '𝑃', Q: '𝑄', R: '𝑅', S: '𝑆', T: '𝑇', U: '𝑈', V: '𝑉', W: '𝑊', X: '𝑋', Y: '𝑌', Z: '𝑍',
+  },
+
+  // 15. Serif Bold Italic
+  serifBoldItalic: {
+    a: '𝒂', b: '𝒃', c: '𝒄', d: '𝒅', e: '𝒆', f: '𝒇', g: '𝒈', h: '𝒉', i: '𝒊', j: '𝒋', k: '𝒌', l: '𝒍', m: '𝒎',
+    n: '𝒏', o: '𝒐', p: '𝒑', q: '𝒒', r: '𝒓', s: '𝒔', t: '𝒕', u: '𝒖', v: '𝒗', w: '𝒘', x: '𝒙', y: '𝒚', z: '𝒛',
+    A: '𝑨', B: '𝑩', C: '𝑪', D: '𝑫', E: '𝑬', F: '𝑭', G: '𝑮', H: '𝑯', I: '𝑰', J: '𝑱', K: '𝑲', L: '𝑳', M: '𝑴',
+    N: '𝑵', O: '𝑶', P: '𝑷', Q: '𝑸', R: '𝑹', S: '𝑺', T: '𝑻', U: '𝑼', V: '𝑽', W: '𝑾', X: '𝑿', Y: '𝒀', Z: '𝒁',
+  },
+
+  // 16. Double-struck
+  doubleStruck: {
+    a: '𝕒', b: '𝕓', c: '𝕔', d: '𝕕', e: '𝕖', f: '𝕗', g: '𝕘', h: '𝕙', i: '𝕚', j: '𝕛', k: '𝕜', l: '𝕝', m: '𝕞',
+    n: '𝕟', o: '𝕠', p: '𝕡', q: '𝕢', r: '𝕣', s: '𝕤', t: '𝕥', u: '𝕦', v: '𝕧', w: '𝕨', x: '𝕩', y: '𝕪', z: '𝕫',
+    A: '𝔸', B: '𝔹', C: 'ℂ', D: '𝔻', E: '𝔼', F: '𝔽', G: '𝔾', H: 'ℍ', I: '𝕀', J: '𝕁', K: '𝕂', L: '𝕃', M: '𝕄',
+    N: 'ℕ', O: '𝕆', P: 'ℙ', Q: 'ℚ', R: 'ℝ', S: '𝕊', T: '𝕋', U: '𝕌', V: '𝕍', W: '𝕎', X: '𝕏', Y: '𝕐', Z: 'ℤ',
+    0: '𝟘', 1: '𝟙', 2: '𝟚', 3: '𝟛', 4: '𝟜', 5: '𝟝', 6: '𝟞', 7: '𝟟', 8: '𝟠', 9: '𝟡',
+  },
+
+  // 17. Script
+  script: {
+    a: '𝒶', b: '𝒷', c: '𝒸', d: '𝒹', e: 'ℯ', f: '𝒻', g: 'ℊ', h: '𝒽', i: '𝒾', j: '𝒿', k: '𝓀', l: '𝓁', m: '𝓂',
+    n: '𝓃', o: 'ℴ', p: '𝓅', q: '𝓆', r: '𝓇', s: '𝓈', t: '𝓉', u: '𝓊', v: '𝓋', w: '𝓌', x: '𝓍', y: '𝓎', z: '𝓏',
+    A: '𝒜', B: 'ℬ', C: '𝒞', D: '𝒟', E: 'ℰ', F: 'ℱ', G: '𝒢', H: 'ℋ', I: 'ℐ', J: '𝒥', K: '𝒦', L: 'ℒ', M: 'ℳ',
+    N: '𝒩', O: '𝒪', P: '𝒫', Q: '𝒬', R: 'ℛ', S: '𝒮', T: '𝒯', U: '𝒰', V: '𝒱', W: '𝒲', X: '𝒳', Y: '𝒴', Z: '𝒵',
+  },
+
+  // 18. Bold Script
+  boldScript: {
+    a: '𝓪', b: '𝓫', c: '𝓬', d: '𝓭', e: '𝓮', f: '𝓯', g: '𝓰', h: '𝓱', i: '𝓲', j: '𝓳', k: '𝓴', l: '𝓵', m: '𝓶',
+    n: '𝓷', o: '𝓸', p: '𝓹', q: '𝓺', r: '𝓻', s: '𝓼', t: '𝓽', u: '𝓾', v: '𝓿', w: '𝔀', x: '𝔁', y: '𝔂', z: '𝔃',
+    A: '𝓐', B: '𝓑', C: '𝓒', D: '𝓓', E: '𝓔', F: '𝓕', G: '𝓖', H: '𝓗', I: '𝓘', J: '𝓙', K: '𝓚', L: '𝓛', M: '𝓜',
+    N: '𝓝', O: '𝓞', P: '𝓟', Q: '𝓠', R: '𝓡', S: '𝓢', T: '𝓣', U: '𝓤', V: '𝓥', W: '𝓦', X: '𝓧', Y: '𝓨', Z: '𝓩',
+  },
+
+  // 19. Fraktur
+  fraktur: {
+    a: '𝔞', b: '𝔟', c: '𝔠', d: '𝔡', e: '𝔢', f: '𝔣', g: '𝔤', h: '𝔥', i: '𝔦', j: '𝔧', k: '𝔨', l: '𝔩', m: '𝔪',
+    n: '𝔫', o: '𝔬', p: '𝔭', q: '𝔮', r: '𝔯', s: '𝔰', t: '𝔱', u: '𝔲', v: '𝔳', w: '𝔴', x: '𝔵', y: '𝔶', z: '𝔷',
+    A: '𝔄', B: '𝔅', C: 'ℭ', D: '𝔇', E: '𝔈', F: '𝔉', G: '𝔊', H: 'ℌ', I: 'ℑ', J: '𝔍', K: '𝔎', L: '𝔏', M: '𝔐',
+    N: '𝔑', O: '𝔒', P: '𝔓', Q: '𝔔', R: 'ℜ', S: '𝔖', T: '𝔗', U: '𝔘', V: '𝔙', W: '𝔚', X: '𝔛', Y: '𝔜', Z: 'ℨ',
+  },
+
+  // 20. Bold Fraktur
+  boldFraktur: {
+    a: '𝖆', b: '𝖇', c: '𝖈', d: '𝖉', e: '𝖊', f: '𝖋', g: '𝖌', h: '𝖍', i: '𝖎', j: '𝖏', k: '𝖐', l: '𝖑', m: '𝖒',
+    n: '𝖓', o: '𝖔', p: '𝖕', q: '𝖖', r: '𝖗', s: '𝖘', t: '𝖙', u: '𝖚', v: '𝖛', w: '𝖜', x: '𝖝', y: '𝖞', z: '𝖟',
+    A: '𝕬', B: '𝕭', C: '𝕮', D: '𝕰', E: '𝕱', F: '𝕲', G: '𝕳', H: '𝕴', I: '𝕵', J: '𝕶', K: '𝕷', L: '𝕸', M: '𝕹',
+    N: '𝕺', O: '𝕻', P: '𝕼', Q: '𝕽', R: '𝕾', S: '𝕽', T: '𝖀', U: '𝖁', V: '𝖂', W: '𝖃', X: '𝖄', Y: '𝖅', Z: '𝖅',
+  },
+
+  // 21. Cursive
+  cursive: {
+    a: '𝓪', b: '𝓫', c: '𝓬', d: '𝓭', e: '𝓮', f: '𝓯', g: '𝓰', h: '𝓱', i: '𝓲', j: '𝓳', k: '𝓴', l: '𝓵', m: '𝓶',
+    n: '𝓷', o: '𝓸', p: '𝓹', q: '𝓺', r: '𝓻', s: '𝓼', t: '𝓽', u: '𝓾', v: '𝓿', w: '𝔀', x: '𝔁', y: '𝔂', z: '𝔃',
+    A: '𝓐', B: '𝓑', C: '𝓒', D: '𝓓', E: '𝓔', F: '𝓕', G: '𝓖', H: '𝓗', I: '𝓘', J: '𝓙', K: '𝓚', L: '𝓛', M: '𝓜',
+    N: '𝓝', O: '𝓞', P: '𝓟', Q: '𝓠', R: '𝓡', S: '𝓢', T: '𝓣', U: '𝓤', V: '𝓥', W: '𝓦', X: '𝓧', Y: '𝓨', Z: '𝓩',
+  },
+
+  // 22. Fullwidth
+  fullwidth: {
+    a: 'ａ', b: 'ｂ', c: 'ｃ', d: 'ｄ', e: 'ｅ', f: 'ｆ', g: 'ｇ', h: 'ｈ', i: 'ｉ', j: 'ｊ', k: 'ｋ', l: 'ｌ', m: 'ｍ',
+    n: 'ｎ', o: 'ｏ', p: 'ｐ', q: 'ｑ', r: 'ｒ', s: 'ｓ', t: 'ｔ', u: 'ｕ', v: 'ｖ', w: 'ｗ', x: 'ｘ', y: 'ｙ', z: 'ｚ',
+    A: 'Ａ', B: 'Ｂ', C: 'Ｃ', D: 'Ｄ', E: 'Ｅ', F: 'Ｆ', G: 'Ｇ', H: 'Ｈ', I: 'Ｉ', J: 'Ｊ', K: 'Ｋ', L: 'Ｌ', M: 'Ｍ',
+    N: 'Ｎ', O: 'Ｏ', P: 'Ｐ', Q: 'Ｑ', R: 'Ｒ', S: 'Ｓ', T: 'Ｔ', U: 'Ｕ', V: 'Ｖ', W: 'Ｗ', X: 'Ｘ', Y: 'Ｙ', Z: 'Ｚ',
+    0: '０', 1: '１', 2: '２', 3: '３', 4: '４', 5: '５', 6: '６', 7: '７', 8: '８', 9: '９',
+    '!': '！', '?': '？', ':': '：', ';': '；', '(': '（', ')': '）', '-': '－', '.': '．', ',': '，',
+  },
+
+  // 23. Circled
+  circled: {
+    a: 'ⓐ', b: 'ⓑ', c: 'ⓒ', d: 'ⓓ', e: 'ⓔ', f: 'ⓕ', g: 'ⓖ', h: 'ⓗ', i: 'ⓘ', j: 'ⓙ', k: 'ⓚ', l: 'ⓛ', m: 'ⓜ',
+    n: 'ⓝ', o: 'ⓞ', p: 'ⓟ', q: 'ⓠ', r: 'ⓡ', s: 'ⓢ', t: 'ⓣ', u: 'ⓤ', v: 'ⓥ', w: 'ⓦ', x: 'ⓧ', y: 'ⓨ', z: 'ⓩ',
+    A: 'Ⓐ', B: 'Ⓑ', C: 'Ⓒ', D: 'Ⓓ', E: 'Ⓔ', F: 'Ⓕ', G: 'Ⓖ', H: 'Ⓗ', I: 'Ⓘ', J: 'Ⓙ', K: 'Ⓚ', L: 'Ⓛ', M: 'Ⓜ',
+    N: 'Ⓝ', O: 'Ⓞ', P: 'Ⓟ', Q: 'Ⓠ', R: 'Ⓡ', S: 'Ⓢ', T: 'Ⓣ', U: 'Ⓤ', V: 'Ⓥ', W: 'Ⓦ', X: 'Ⓧ', Y: 'Ⓨ', Z: 'Ⓩ',
+    0: '⓪', 1: '①', 2: '②', 3: '③', 4: '④', 5: '⑤', 6: '⑥', 7: '⑦', 8: '⑧', 9: '⑨',
+  },
+
+  // 24. Squared
   squared: {
     a: '🄰', b: '🄱', c: '🄲', d: '🄳', e: '🄴', f: '🄵', g: '🄶', h: '🄷', i: '🄸', j: '🄹', k: '🄺', l: '🄻', m: '🄼',
     n: '🄽', o: '🄾', p: '🄿', q: '🅀', r: '🅁', s: '🅂', t: '🅃', u: '🅄', v: '🅅', w: '🅆', x: '🅇', y: '🅈', z: '🅉',
@@ -91,51 +210,295 @@ const charMaps = {
     0: '⓪', 1: '①', 2: '②', 3: '③', 4: '④', 5: '⑤', 6: '⑥', 7: '⑦', 8: '⑧', 9: '⑨',
   },
 
-  // Circled (Ⓐ-Ⓩ)
-  circled: {
-    a: 'ⓐ', b: 'ⓑ', c: 'ⓒ', d: 'ⓓ', e: 'ⓔ', f: 'ⓕ', g: 'ⓖ', h: 'ⓗ', i: 'ⓘ', j: 'ⓙ', k: 'ⓚ', l: 'ⓛ', m: 'ⓜ',
-    n: 'ⓝ', o: 'ⓞ', p: 'ⓟ', q: 'ⓠ', r: 'ⓡ', s: 'ⓢ', t: 'ⓣ', u: 'ⓤ', v: 'ⓥ', w: 'ⓦ', x: 'ⓧ', y: 'ⓨ', z: 'ⓩ',
-    A: 'Ⓐ', B: 'Ⓑ', C: 'Ⓒ', D: 'Ⓓ', E: 'Ⓔ', F: 'Ⓕ', G: 'Ⓖ', H: 'Ⓗ', I: 'Ⓘ', J: 'Ⓙ', K: 'Ⓚ', L: 'Ⓛ', M: 'Ⓜ',
-    N: 'Ⓝ', O: 'Ⓞ', P: 'Ⓟ', Q: 'Ⓠ', R: 'Ⓡ', S: 'Ⓢ', T: 'Ⓣ', U: 'Ⓤ', V: 'Ⓥ', W: 'Ⓦ', X: 'Ⓧ', Y: 'Ⓨ', Z: 'Ⓩ',
-    0: '⓪', 1: '⓵', 2: '⓶', 3: '⓷', 4: '⓸', 5: '⓹', 6: '⓺', 7: '⓻', 8: '⓼', 9: '⓽',
+  // 25. Parenthesized
+  parenthesized: {
+    a: '⒜', b: '⒝', c: '⒞', d: '⒟', e: '⒠', f: '⒡', g: '⒢', h: '⒣', i: '⒤', j: '⒥', k: '⒦', l: '⒧', m: '⒨',
+    n: '⒩', o: '⒪', p: '⒫', q: '⒬', r: '⒭', s: '⒮', t: '⒯', u: '⒰', v: '⒱', w: '⒲', x: '⒳', y: '⒴', z: '⒵',
+    A: '🄐', B: '🄑', C: '🄒', D: '🄓', E: '🄔', F: '🄕', G: '🄖', H: '🄗', I: '🄘', J: '🄙', K: '🄚', L: '🄛', M: '🄜',
+    N: '🄝', O: '🄞', P: '🄟', Q: '🄠', R: '🄡', S: '🄢', T: '🄣', U: '🄤', V: '🄥', W: '🄦', X: '🄧', Y: '🄨', Z: '🄩',
   },
 
-  // Upside Down (∀-˙)
+  // 26. Negative Circled (Black Circle White Letter)
+  negativeCircled: {
+    a: '🅐', b: '🅑', c: '🅒', d: '🅓', e: '🅔', f: '🅕', g: '🅖', h: '🅗', i: '🅘', j: '🅙', k: '🅚', l: '🅛', m: '🅜',
+    n: '🅝', o: '🅞', p: '🅟', q: '🅠', r: '🅡', s: '🅢', t: '🅣', u: '🅤', v: '🅥', w: '🅦', x: '🅧', y: '🅨', z: '🅩',
+    A: '🅐', B: '🅑', C: '🅒', D: '🅓', E: '🅔', F: '🅕', G: '🅖', H: '🅗', I: '🅘', J: '🅙', K: '🅚', L: '🅛', M: '🅜',
+    N: '🅝', O: '🅞', P: '🅟', Q: '🅠', R: '🅡', S: '🅢', T: '🅣', U: '🅤', V: '🅥', W: '🅦', X: '🅧', Y: '🅨', Z: '🅩',
+    0: '🄋', 1: '🄌', 2: '🄍', 3: '🄎', 4: '🄏', 5: '🄐', 6: '🄑', 7: '🄒', 8: '🄓', 9: '🄔',
+  },
+
+  // 27. Squared Latin
+  squaredLatin: {
+    A: '🄰', B: '🄱', C: '🄲', D: '🄳', E: '🄴', F: '🄵', G: '🄶', H: '🄷', I: '🄸', J: '🄹', K: '🄺', L: '🄻', M: '🄼',
+    N: '🄽', O: '🄾', P: '🄿', Q: '🅀', R: '🅁', S: '🅂', T: '🅃', U: '🅄', V: '🅅', W: '🅆', X: '🅇', Y: '🅈', Z: '🅉',
+  },
+
+  // 28. Dark Squared Latin (Black Background)
+  darkSquaredLatin: {
+    A: '🅰', B: '🅱', C: '🅲', D: '🅳', E: '🅴', F: '🅵', G: '🅶', H: '🅷', I: '🅸', J: '🅹', K: '🅺', L: '🅻', M: '🅼',
+    N: '🅽', O: '🅾', P: '🅿', Q: '🆀', R: '🆁', S: '🆂', T: '🆃', U: '🆄', V: '🆅', W: '🆆', X: '🆇', Y: '🆈', Z: '🆉',
+  },
+
+  // 29. Bubble Text
+  bubbleText: {
+    a: '🅐', b: '🅑', c: '🅒', d: '🅓', e: '🅔', f: '🅕', g: '🅖', h: '🅗', i: '🅘', j: '🅙', k: '🅚', l: '🅛', m: '🅜',
+    n: '🅝', o: '🅞', p: '🅟', q: '🅠', r: '🅡', s: '🅢', t: '🅣', u: '🅤', v: '🅥', w: '🅦', x: '🅧', y: '🅨', z: '🅩',
+    A: '🅐', B: '🅑', C: '🅒', D: '🅓', E: '🅔', F: '🅕', G: '🅖', H: '🅗', I: '🅘', J: '🅙', K: '🅚', L: '🅛', M: '🅜',
+    N: '🅝', O: '🅞', P: '🅟', Q: '🅠', R: '🅡', S: '🅢', T: '🅣', U: '🅤', V: '🅥', W: '🅦', X: '🅧', Y: '🅨', Z: '🅩',
+  },
+
+  // 30. Upside Down
   upsideDown: {
     a: 'ɐ', b: 'q', c: 'ɔ', d: 'p', e: 'ǝ', f: 'ɟ', g: 'ƃ', h: 'ɥ', i: 'ᴉ', j: 'ɾ', k: 'ʞ', l: 'l', m: 'ɯ',
     n: 'u', o: 'o', p: 'd', q: 'b', r: 'ɹ', s: 's', t: 'ʇ', u: 'n', v: 'ʌ', w: 'ʍ', x: 'x', y: 'ʎ', z: 'z',
     A: '∀', B: 'ꓭ', C: 'Ɔ', D: 'ᗡ', E: 'Ǝ', F: 'Ⅎ', G: '⅁', H: 'H', I: 'I', J: 'ſ', K: 'ꓘ', L: '˥', M: 'W',
     N: 'N', O: 'O', P: 'Ԁ', Q: 'Ꝺ', R: 'ꓤ', S: 'S', T: '⊥', U: '∩', V: 'Λ', W: 'M', X: 'X', Y: '⅄', Z: 'Z',
-    0: '0', 1: 'Ɩ', 2: 'ᄅ', 3: 'Ɛ', 4: 'ㄣ', 5: 'ϛ', 6: '9', 7: 'ㄥ', 8: '8', 9: '6',
-    '!': '¡', '?': '¿', '.': '˙', ',': '\'', '\'': ',', '"': '„', '(': ')', ')': '(', '[': ']', ']': '[',
+    '!': '¡', '?': '¿', '.': '˙', ',': "'", "'": ',', '"': '„', '(': ')', ')': '(', '[': ']', ']': '[',
     '{': '}', '}': '{', '<': '>', '>': '<', '&': '⅋', '_': '‾',
+  },
+
+  // 31. Mirrored (Left-Right Flipped)
+  mirrored: {
+    a: 'ɐ', b: 'q', c: 'ɔ', d: 'p', e: 'ǝ', f: 'ɟ', g: 'ƃ', h: 'ɥ', i: 'ᴉ', j: 'ɾ', k: 'ʞ', l: 'l', m: 'ɯ',
+    n: 'u', o: 'o', p: 'd', q: 'b', r: 'ɹ', s: 's', t: 'ʇ', u: 'n', v: 'ʌ', w: 'ʍ', x: 'x', y: 'ʎ', z: 'z',
+    A: '∀', B: 'ꓭ', C: 'Ɔ', D: 'ᗡ', E: 'Ǝ', F: 'Ⅎ', G: '⅁', H: 'H', I: 'I', J: 'ſ', K: 'ꓘ', L: '˥', M: 'W',
+    N: 'N', O: 'O', P: 'Ԁ', Q: 'Ꝺ', R: 'ꓤ', S: 'S', T: '⊥', U: '∩', V: 'Λ', W: 'M', X: 'X', Y: '⅄', Z: 'Z',
+  },
+
+  // 32. Regional Indicator (Country Flags)
+  regionalIndicator: {
+    A: '🇦', B: '🇧', C: '🇨', D: '🇩', E: '🇪', F: '🇫', G: '🇬', H: '🇭', I: '🇮', J: '🇯', K: '🇰', L: '🇱', M: '🇲',
+    N: '🇳', O: '🇴', P: '🇵', Q: '🇶', R: '🇷', S: '🇸', T: '🇹', U: '🇺', V: '🇻', W: '🇼', X: '🇽', Y: '🇾', Z: '🇿',
+  },
+
+  // 33. Combining Overline (A̅)
+  combiningOverline: {
+    a: 'a\u0305', b: 'b\u0305', c: 'c\u0305', d: 'd\u0305', e: 'e\u0305', f: 'f\u0305', g: 'g\u0305', h: 'h\u0305', i: 'i\u0305', j: 'j\u0305', k: 'k\u0305', l: 'l\u0305', m: 'm\u0305',
+    n: 'n\u0305', o: 'o\u0305', p: 'p\u0305', q: 'q\u0305', r: 'r\u0305', s: 's\u0305', t: 't\u0305', u: 'u\u0305', v: 'v\u0305', w: 'w\u0305', x: 'x\u0305', y: 'y\u0305', z: 'z\u0305',
+    A: 'A\u0305', B: 'B\u0305', C: 'C\u0305', D: 'D\u0305', E: 'E\u0305', F: 'F\u0305', G: 'G\u0305', H: 'H\u0305', I: 'I\u0305', J: 'J\u0305', K: 'K\u0305', L: 'L\u0305', M: 'M\u0305',
+    N: 'N\u0305', O: 'O\u0305', P: 'P\u0305', Q: 'Q\u0305', R: 'R\u0305', S: 'S\u0305', T: 'T\u0305', U: 'U\u0305', V: 'V\u0305', W: 'W\u0305', X: 'X\u0305', Y: 'Y\u0305', Z: 'Z\u0305',
+  },
+
+  // 34. Combining Underline (A̲)
+  combiningUnderline: {
+    a: 'a\u0332', b: 'b\u0332', c: 'c\u0332', d: 'd\u0332', e: 'e\u0332', f: 'f\u0332', g: 'g\u0332', h: 'h\u0332', i: 'i\u0332', j: 'j\u0332', k: 'k\u0332', l: 'l\u0332', m: 'm\u0332',
+    n: 'n\u0332', o: 'o\u0332', p: 'p\u0332', q: 'q\u0332', r: 'r\u0332', s: 's\u0332', t: 't\u0332', u: 'u\u0332', v: 'v\u0332', w: 'w\u0332', x: 'x\u0332', y: 'y\u0332', z: 'z\u0332',
+    A: 'A\u0332', B: 'B\u0332', C: 'C\u0332', D: 'D\u0332', E: 'E\u0332', F: 'F\u0332', G: 'G\u0332', H: 'H\u0332', I: 'I\u0332', J: 'J\u0332', K: 'K\u0332', L: 'L\u0332', M: 'M\u0332',
+    N: 'N\u0332', O: 'O\u0332', P: 'P\u0332', Q: 'Q\u0332', R: 'R\u0332', S: 'S\u0332', T: 'T\u0332', U: 'U\u0332', V: 'V\u0332', W: 'W\u0332', X: 'X\u0332', Y: 'Y\u0332', Z: 'Z\u0332',
+  },
+
+  // 35. Combining Slash (A̸)
+  combiningSlash: {
+    a: 'a\u0338', b: 'b\u0338', c: 'c\u0338', d: 'd\u0338', e: 'e\u0338', f: 'f\u0338', g: 'g\u0338', h: 'h\u0338', i: 'i\u0338', j: 'j\u0338', k: 'k\u0338', l: 'l\u0338', m: 'm\u0338',
+    n: 'n\u0338', o: 'o\u0338', p: 'p\u0338', q: 'q\u0338', r: 'r\u0338', s: 's\u0338', t: 't\u0338', u: 'u\u0338', v: 'v\u0338', w: 'w\u0338', x: 'x\u0338', y: 'y\u0338', z: 'z\u0338',
+    A: 'A\u0338', B: 'B\u0338', C: 'C\u0338', D: 'D\u0338', E: 'E\u0338', F: 'F\u0338', G: 'G\u0338', H: 'H\u0338', I: 'I\u0338', J: 'J\u0338', K: 'K\u0338', L: 'L\u0338', M: 'M\u0338',
+    N: 'N\u0338', O: 'O\u0338', P: 'P\u0338', Q: 'Q\u0338', R: 'R\u0338', S: 'S\u0338', T: 'T\u0338', U: 'U\u0338', V: 'V\u0338', W: 'W\u0338', X: 'X\u0338', Y: 'Y\u0338', Z: 'Z\u0338',
+  },
+
+  // 36. Combining X Above (A⃫)
+  combiningXAbove: {
+    a: 'a\u033B', b: 'b\u033B', c: 'c\u033B', d: 'd\u033B', e: 'e\u033B', f: 'f\u033B', g: 'g\u033B', h: 'h\u033B', i: 'i\u033B', j: 'j\u033B', k: 'k\u033B', l: 'l\u033B', m: 'm\u033B',
+    n: 'n\u033B', o: 'o\u033B', p: 'p\u033B', q: 'q\u033B', r: 'r\u033B', s: 's\u033B', t: 't\u033B', u: 'u\u033B', v: 'v\u033B', w: 'w\u033B', x: 'x\u033B', y: 'y\u033B', z: 'z\u033B',
+    A: 'A\u033B', B: 'B\u033B', C: 'C\u033B', D: 'D\u033B', E: 'E\u033B', F: 'F\u033B', G: 'G\u033B', H: 'H\u033B', I: 'I\u033B', J: 'J\u033B', K: 'K\u033B', L: 'L\u033B', M: 'M\u033B',
+    N: 'N\u033B', O: 'O\u033B', P: 'P\u033B', Q: 'Q\u033B', R: 'R\u033B', S: 'S\u033B', T: 'T\u033B', U: 'U\u033B', V: 'V\u033B', W: 'W\u033B', X: 'X\u033B', Y: 'Y\u033B', Z: 'Z\u033B',
+  },
+
+  // 37. Combining Arrow (A⃗)
+  combiningArrow: {
+    a: 'a\u20D7', b: 'b\u20D7', c: 'c\u20D7', d: 'd\u20D7', e: 'e\u20D7', f: 'f\u20D7', g: 'g\u20D7', h: 'h\u20D7', i: 'i\u20D7', j: 'j\u20D7', k: 'k\u20D7', l: 'l\u20D7', m: 'm\u20D7',
+    n: 'n\u20D7', o: 'o\u20D7', p: 'p\u20D7', q: 'q\u20D7', r: 'r\u20D7', s: 's\u20D7', t: 't\u20D7', u: 'u\u20D7', v: 'v\u20D7', w: 'w\u20D7', x: 'x\u20D7', y: 'y\u20D7', z: 'z\u20D7',
+    A: 'A\u20D7', B: 'B\u20D7', C: 'C\u20D7', D: 'D\u20D7', E: 'E\u20D7', F: 'F\u20D7', G: 'G\u20D7', H: 'H\u20D7', I: 'I\u20D7', J: 'J\u20D7', K: 'K\u20D7', L: 'L\u20D7', M: 'M\u20D7',
+    N: 'N\u20D7', O: 'O\u20D7', P: 'P\u20D7', Q: 'Q\u20D7', R: 'R\u20D7', S: 'S\u20D7', T: 'T\u20D7', U: 'U\u20D7', V: 'V\u20D7', W: 'W\u20D7', X: 'X\u20D7', Y: 'Y\u20D7', Z: 'Z\u20D7',
+  },
+
+  // 38. Combining Tilde (Ã)
+  combiningTilde: {
+    a: 'ã', b: 'b̃', c: 'c̃', d: 'd̃', e: 'ẽ', f: 'f̃', g: 'g̃', h: 'h̃', i: 'ĩ', j: 'j̃', k: 'k̃', l: 'l̃', m: 'm̃',
+    n: 'ñ', o: 'õ', p: 'p̃', q: 'q̃', r: 'r̃', s: 's̃', t: 't̃', u: 'ũ', v: 'ṽ', w: 'w̃', x: 'x̃', y: 'ỹ', z: 'z̃',
+    A: 'Ã', B: 'B̃', C: 'C̃', D: 'D̃', E: 'Ẽ', F: 'F̃', G: 'G̃', H: 'H̃', I: 'Ĩ', J: 'J̃', K: 'K̃', L: 'L̃', M: 'M̃',
+    N: 'Ñ', O: 'Õ', P: 'P̃', Q: 'Q̃', R: 'R̃', S: 'S̃', T: 'T̃', U: 'Ũ', V: 'Ṽ', W: 'W̃', X: 'X̃', Y: 'Ỹ', Z: 'Z̃',
+  },
+
+  // 39. Combining Double Overline (A̿)
+  combiningDoubleOverline: {
+    a: 'a\u0307\u0304', b: 'b\u0307\u0304', c: 'c\u0307\u0304', d: 'd\u0307\u0304', e: 'e\u0307\u0304', f: 'f\u0307\u0304', g: 'g\u0307\u0304', h: 'h\u0307\u0304', i: 'i\u0307\u0304', j: 'j\u0307\u0304', k: 'k\u0307\u0304', l: 'l\u0307\u0304', m: 'm\u0307\u0304',
+    n: 'n\u0307\u0304', o: 'o\u0307\u0304', p: 'p\u0307\u0304', q: 'q\u0307\u0304', r: 'r\u0307\u0304', s: 's\u0307\u0304', t: 't\u0307\u0304', u: 'u\u0307\u0304', v: 'v\u0307\u0304', w: 'w\u0307\u0304', x: 'x\u0307\u0304', y: 'y\u0307\u0304', z: 'z\u0307\u0304',
+    A: 'A\u0307\u0304', B: 'B\u0307\u0304', C: 'C\u0307\u0304', D: 'D\u0307\u0304', E: 'E\u0307\u0304', F: 'F\u0307\u0304', G: 'G\u0307\u0304', H: 'H\u0307\u0304', I: 'I\u0307\u0304', J: 'J\u0307\u0304', K: 'K\u0307\u0304', L: 'L\u0307\u0304', M: 'M\u0307\u0304',
+    N: 'N\u0307\u0304', O: 'O\u0307\u0304', P: 'P\u0307\u0304', Q: 'Q\u0307\u0304', R: 'R\u0307\u0304', S: 'S\u0307\u0304', T: 'T\u0307\u0304', U: 'U\u0307\u0304', V: 'V\u0307\u0304', W: 'W\u0307\u0304', X: 'X\u0307\u0304', Y: 'Y\u0307\u0304', Z: 'Z\u0307\u0304',
+  },
+
+  // 40. Combining Long Stroke (A̶ - Strikethrough)
+  combiningLongStroke: {
+    a: 'a\u0336', b: 'b\u0336', c: 'c\u0336', d: 'd\u0336', e: 'e\u0336', f: 'f\u0336', g: 'g\u0336', h: 'h\u0336', i: 'i\u0336', j: 'j\u0336', k: 'k\u0336', l: 'l\u0336', m: 'm\u0336',
+    n: 'n\u0336', o: 'o\u0336', p: 'p\u0336', q: 'q\u0336', r: 'r\u0336', s: 's\u0336', t: 't\u0336', u: 'u\u0336', v: 'v\u0336', w: 'w\u0336', x: 'x\u0336', y: 'y\u0336', z: 'z\u0336',
+    A: 'A\u0336', B: 'B\u0336', C: 'C\u0336', D: 'D\u0336', E: 'E\u0336', F: 'F\u0336', G: 'G\u0336', H: 'H\u0336', I: 'I\u0336', J: 'J\u0336', K: 'K\u0336', L: 'L\u0336', M: 'M\u0336',
+    N: 'N\u0336', O: 'O\u0336', P: 'P\u0336', Q: 'Q\u0336', R: 'R\u0336', S: 'S\u0336', T: 'T\u0336', U: 'U\u0336', V: 'V\u0336', W: 'W\u0336', X: 'X\u0336', Y: 'Y\u0336', Z: 'Z\u0336',
+  },
+
+  // 41. Circled Numbers
+  circledNumbers: {
+    0: '⓪', 1: '①', 2: '②', 3: '③', 4: '④', 5: '⑤', 6: '⑥', 7: '⑦', 8: '⑧', 9: '⑨',
+    10: '⑩', 11: '⑪', 12: '⑫', 13: '⑬', 14: '⑭', 15: '⑮', 16: '⑯', 17: '⑰', 18: '⑱', 19: '⑲', 20: '⑳',
+  },
+
+  // 42. Parenthesized Numbers
+  parenthesizedNumbers: {
+    0: '⓪', 1: '⑴', 2: '⑵', 3: '⑶', 4: '⑷', 5: '⑸', 6: '⑹', 7: '⑺', 8: '⑻', 9: '⑼',
+    10: '⑽', 11: '⑾', 12: '⑿', 13: '⒀', 14: '⒁', 15: '⒂', 16: '⒃', 17: '⒄', 18: '⒅', 19: '⒆', 20: '⒇',
+  },
+
+  // 43. Dotted Numbers
+  dottedNumbers: {
+    0: '⓪', 1: '⓵', 2: '⓶', 3: '⓷', 4: '⓸', 5: '⓹', 6: '⓺', 7: '⓻', 8: '⓼', 9: '⓽',
+  },
+
+  // 44. Roman Numerals
+  romanNumerals: {
+    1: 'Ⅰ', 2: 'Ⅱ', 3: 'Ⅲ', 4: 'Ⅳ', 5: 'Ⅴ', 6: 'Ⅵ', 7: 'Ⅶ', 8: 'Ⅷ', 9: 'Ⅸ', 10: 'Ⅹ',
+    11: 'Ⅺ', 12: 'Ⅻ', 13: 'ⅩⅢ', 14: 'ⅩⅣ', 15: 'ⅩⅤ', 16: 'ⅩⅥ', 17: 'ⅩⅦ', 18: 'ⅩⅧ', 19: 'ⅩⅨ', 20: 'ⅩⅩ',
+  },
+
+  // 45. Double-struck Numbers
+  doubleStruckNumbers: {
+    0: '𝟘', 1: '𝟙', 2: '𝟚', 3: '𝟛', 4: '𝟜', 5: '𝟝', 6: '𝟞', 7: '𝟟', 8: '𝟠', 9: '𝟡',
+  },
+
+  // 46. Slanted (Slanted Serif)
+  slanted: {
+    a: '𝔞', b: '𝔟', c: '𝔠', d: '𝔡', e: '𝔢', f: '𝔣', g: '𝔤', h: '𝔥', i: '𝔦', j: '𝔧', k: '𝔨', l: '𝔩', m: '𝔪',
+    n: '𝔫', o: '𝔬', p: '𝔭', q: '𝔮', r: '𝔯', s: '𝔰', t: '𝔱', u: '𝔲', v: '𝔳', w: '𝔴', x: '𝔵', y: '𝔶', z: '𝔷',
+    A: '𝔄', B: '𝔅', C: 'ℭ', D: '𝔇', E: '𝔈', F: '𝔉', G: '𝔊', H: 'ℌ', I: 'ℑ', J: '𝔍', K: '𝔎', L: '𝔏', M: '𝔐',
+    N: '𝔑', O: '𝔒', P: '𝔓', Q: '𝔔', R: 'ℜ', S: '𝔖', T: '𝔗', U: '𝔘', V: '𝔙', W: '𝔚', X: '𝔛', Y: '𝔜', Z: 'ℨ',
+  },
+
+  // 47. Small Caps Bold
+  smallCapsBold: {
+    a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ',
+    n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'Q', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: 'X', y: 'ʏ', z: 'ᴢ',
+    A: 'ᴀ', B: 'ʙ', C: 'ᴄ', D: 'ᴅ', E: 'ᴇ', F: 'ꜰ', G: 'ɢ', H: 'ʜ', I: 'ɪ', J: 'ᴊ', K: 'ᴋ', L: 'ʟ', M: 'ᴍ',
+    N: 'ɴ', O: 'ᴏ', P: 'ᴘ', Q: 'Q', R: 'ʀ', S: 'ꜱ', T: 'ᴛ', U: 'ᴜ', V: 'ᴠ', W: 'ᴡ', X: 'X', Y: 'ʏ', Z: 'ᴢ',
+  },
+
+  // 48. Superscript Small
+  superscriptSmall: {
+    a: 'ᵃ', b: 'ᵇ', c: 'ᶜ', d: 'ᵈ', e: 'ᵉ', f: 'ᶠ', g: 'ᵍ', h: 'ʰ', i: 'ⁱ', j: 'ʲ', k: 'ᵏ', l: 'ˡ', m: 'ᵐ',
+    n: 'ⁿ', o: 'ᵒ', p: 'ᵖ', q: 'ᵠ', r: 'ʳ', s: 'ˢ', t: 'ᵗ', u: 'ᵘ', v: 'ᵛ', w: 'ʷ', x: 'ˣ', y: 'ʸ', z: 'ᶻ',
+    A: 'ᴬ', B: 'ᴮ', C: 'ᶜ', D: 'ᴰ', E: 'ᴱ', F: 'ᶠ', G: 'ᴳ', H: 'ᴴ', I: 'ᴵ', J: 'ᴶ', K: 'ᴷ', L: 'ᴸ', M: 'ᴹ',
+    N: 'ᴺ', O: 'ᴼ', P: 'ᴾ', Q: 'ᵠ', R: 'ᴿ', S: 'ˢ', T: 'ᵀ', U: 'ᵁ', V: 'ⱽ', W: 'ᵂ', X: 'ˣ', Y: 'ʸ', Z: 'ᶻ',
+  },
+
+  // 49. Subscript Small
+  subscriptSmall: {
+    a: 'ₐ', b: 'ᵦ', c: '꜀', d: 'ᵈ', e: 'ₑ', f: 'ᶠ', g: 'ᵍ', h: 'ₕ', i: 'ᵢ', j: 'ⱼ', k: 'ₖ', l: 'ₗ', m: 'ₘ',
+    n: 'ₙ', o: 'ₒ', p: 'ₚ', q: 'ᵠ', r: 'ᵣ', s: 'ₛ', t: 'ₜ', u: 'ᵤ', v: 'ᵥ', w: 'w', x: 'ₓ', y: 'ᵧ', z: 'ᵨ',
+    A: 'ₐ', B: 'ᵦ', C: '꜀', D: 'ᵈ', E: 'ₑ', F: 'ᶠ', G: 'ᵍ', H: 'ₕ', I: 'ᵢ', J: 'ⱼ', K: 'ₖ', L: 'ₗ', M: 'ₘ',
+    N: 'ₙ', O: 'ₒ', P: 'ₚ', Q: 'ᵠ', R: 'ᵣ', S: 'ₛ', T: 'ₜ', U: 'ᵤ', V: 'ᵥ', W: 'w', X: 'ₓ', Y: 'ᵧ', Z: 'ᵨ',
+  },
+
+  // 50. Emoji Combo (Squared Negative style)
+  emojiCombo: {
+    A: '🄰', B: '🄱', C: '🄲', D: '🄳', E: '🄴', F: '🄵', G: '🄶', H: '🄷', I: '🄸', J: '🄹', K: '🄺', L: '🄻', M: '🄼',
+    N: '🄽', O: '🄾', P: '🄿', Q: '🅀', R: '🅁', S: '🅂', T: '🅃', U: '🅄', V: '🅅', W: '🅆', X: '🅇', Y: '🅈', Z: '🅉',
+    a: '𝖆', b: '𝖇', c: '𝖈', d: '𝖉', e: '𝖊', f: '𝖋', g: '𝖌', h: '𝖍', i: '𝖎', j: '𝖏', k: '𝖐', l: '𝖑', m: '𝖒',
+    n: '𝖓', o: '𝖔', p: '𝖕', q: '𝖖', r: '𝖗', s: '𝖘', t: '𝖙', u: '𝖚', v: '𝖛', w: '𝖜', x: '𝖝', y: '𝖞', z: '𝖟',
+  },
+
+  // 51. Squared Negative (Black Background Numbers)
+  squaredNegative: {
+    0: '🅋', 1: '🅌', 2: '🅍', 3: '🅎', 4: '🅏', 5: '🅐', 6: '🅑', 7: '🅒', 8: '🅓', 9: '🅔',
+  },
+
+  // 52. Circled Sans Serif
+  circledSansSerif: {
+    a: '🅐', b: '🅑', c: '🅒', d: '🅓', e: '🅔', f: '🅕', g: '🅖', h: '🅗', i: '🅘', j: '🅙', k: '🅚', l: '🅛', m: '🅜',
+    n: '🅝', o: '🅞', p: '🅟', q: '🅠', r: '🅡', s: '🅢', t: '🅣', u: '🅤', v: '🅥', w: '🅦', x: '🅧', y: '🅨', z: '🅩',
+    A: '🅐', B: '🅑', C: '🅒', D: '🅓', E: '🅔', F: '🅕', G: '🅖', H: '🅗', I: '🅘', J: '🅙', K: '🅚', L: '🅛', M: '🅜',
+    N: '🅝', O: '🅞', P: '🅟', Q: '🅠', R: '🅡', S: '🅢', T: '🅣', U: '🅤', V: '🅥', W: '🅦', X: '🅧', Y: '🅨', Z: '🅩',
   },
 };
 
 export const fontStyles: FontStyle[] = [
-  { id: 'bold', name: 'Bold', description: 'Mathematical Bold' },
-  { id: 'italic', name: 'Italic', description: 'Mathematical Italic' },
-  { id: 'boldItalic', name: 'Bold Italic', description: 'Mathematical Bold Italic' },
-  { id: 'script', name: 'Script', description: 'Calligraphic Style' },
-  { id: 'boldScript', name: 'Bold Script', description: 'Bold Calligraphic' },
-  { id: 'fraktur', name: 'Fraktur', description: 'Old German Style' },
-  { id: 'doubleStruck', name: 'Double Struck', description: 'Blackboard Bold' },
-  { id: 'sansSerif', name: 'Sans Serif', description: 'Clean Modern Look' },
-  { id: 'monospace', name: 'Monospace', description: 'Typewriter Style' },
-  { id: 'squared', name: 'Squared', description: 'Square Boxed' },
-  { id: 'circled', name: 'Circled', description: 'Inside Circles' },
-  { id: 'upsideDown', name: 'Upside Down', description: 'Flipped Characters' },
+  // Category 1: Basic Math Styles
+  { id: 'bold', name: 'Bold', category: 'Basic' },
+  { id: 'italic', name: 'Italic', category: 'Basic' },
+  { id: 'boldItalic', name: 'Bold Italic', category: 'Basic' },
+  { id: 'smallCaps', name: 'Small Caps', category: 'Basic' },
+  { id: 'superscript', name: 'Superscript', category: 'Basic' },
+  { id: 'subscript', name: 'Subscript', category: 'Basic' },
+  { id: 'monospace', name: 'Monospace', category: 'Basic' },
+  { id: 'sansSerif', name: 'Sans Serif', category: 'Basic' },
+  { id: 'sansSerifBold', name: 'Sans Serif Bold', category: 'Basic' },
+  { id: 'sansSerifItalic', name: 'Sans Serif Italic', category: 'Basic' },
+  { id: 'sansSerifBoldItalic', name: 'Sans Serif Bold Italic', category: 'Basic' },
+  { id: 'serif', name: 'Serif', category: 'Basic' },
+  { id: 'serifBold', name: 'Serif Bold', category: 'Basic' },
+  { id: 'serifItalic', name: 'Serif Italic', category: 'Basic' },
+  { id: 'serifBoldItalic', name: 'Serif Bold Italic', category: 'Basic' },
+  { id: 'doubleStruck', name: 'Double-struck', category: 'Basic' },
+
+  // Category 2: Decorative Styles
+  { id: 'script', name: 'Script', category: 'Decorative' },
+  { id: 'boldScript', name: 'Bold Script', category: 'Decorative' },
+  { id: 'fraktur', name: 'Fraktur', category: 'Decorative' },
+  { id: 'boldFraktur', name: 'Bold Fraktur', category: 'Decorative' },
+  { id: 'cursive', name: 'Cursive', category: 'Decorative' },
+  { id: 'fullwidth', name: 'Fullwidth', category: 'Decorative' },
+  { id: 'circled', name: 'Circled', category: 'Decorative' },
+  { id: 'squared', name: 'Squared', category: 'Decorative' },
+  { id: 'parenthesized', name: 'Parenthesized', category: 'Decorative' },
+  { id: 'negativeCircled', name: 'Negative Circled', category: 'Decorative' },
+  { id: 'squaredLatin', name: 'Squared Latin', category: 'Decorative' },
+  { id: 'darkSquaredLatin', name: 'Dark Squared Latin', category: 'Decorative' },
+  { id: 'bubbleText', name: 'Bubble Text', category: 'Decorative' },
+  { id: 'upsideDown', name: 'Upside Down', category: 'Decorative' },
+  { id: 'mirrored', name: 'Mirrored', category: 'Decorative' },
+  { id: 'regionalIndicator', name: 'Regional Indicator', category: 'Decorative' },
+
+  // Category 3: Combining Marks
+  { id: 'combiningOverline', name: 'Overline', category: 'Combining' },
+  { id: 'combiningUnderline', name: 'Underline', category: 'Combining' },
+  { id: 'combiningSlash', name: 'Slash', category: 'Combining' },
+  { id: 'combiningXAbove', name: 'X Above', category: 'Combining' },
+  { id: 'combiningArrow', name: 'Arrow', category: 'Combining' },
+  { id: 'combiningTilde', name: 'Tilde', category: 'Combining' },
+  { id: 'combiningDoubleOverline', name: 'Double Overline', category: 'Combining' },
+  { id: 'combiningLongStroke', name: 'Long Stroke', category: 'Combining' },
+
+  // Category 4: Numbers
+  { id: 'circledNumbers', name: 'Circled Numbers', category: 'Numbers' },
+  { id: 'parenthesizedNumbers', name: 'Parenthesized Numbers', category: 'Numbers' },
+  { id: 'dottedNumbers', name: 'Dotted Numbers', category: 'Numbers' },
+  { id: 'romanNumerals', name: 'Roman Numerals', category: 'Numbers' },
+  { id: 'doubleStruckNumbers', name: 'Double-struck Numbers', category: 'Numbers' },
+
+  // Category 5: Extra Styles
+  { id: 'slanted', name: 'Slanted', category: 'Extra' },
+  { id: 'smallCapsBold', name: 'Small Caps Bold', category: 'Extra' },
+  { id: 'superscriptSmall', name: 'Superscript Small', category: 'Extra' },
+  { id: 'subscriptSmall', name: 'Subscript Small', category: 'Extra' },
+  { id: 'emojiCombo', name: 'Emoji Combo', category: 'Extra' },
+  { id: 'squaredNegative', name: 'Squared Negative', category: 'Extra' },
+  { id: 'circledSansSerif', name: 'Circled Sans Serif', category: 'Extra' },
 ];
 
 export function convertText(text: string, fontId: string): string {
   if (!text.trim()) return '';
 
-  const charMap = charMaps[fontId as keyof typeof charMaps];
+  const charMap = charMaps[fontId];
   if (!charMap) return text;
+
+  // Special handling for Regional Indicator - only 2 letters become flags
+  if (fontId === 'regionalIndicator') {
+    const letters = text.toUpperCase().replace(/[^A-Z]/g, '');
+    if (letters.length === 2) {
+      return letters.split('').map(l => charMap[l] || l).join('');
+    }
+    return text; // Return original if not exactly 2 letters
+  }
 
   return text
     .split('')
-    .map((char) => charMap[char as keyof typeof charMap] || char)
+    .map((char) => charMap[char] || char)
     .join('');
 }
 

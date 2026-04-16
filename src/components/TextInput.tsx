@@ -1,6 +1,6 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { X, Type } from 'lucide-react';
 import { useState, useCallback } from 'react';
 
 interface TextInputProps {
@@ -18,11 +18,12 @@ export function TextInput({ value, onChange }: TextInputProps) {
   return (
     <div className="relative">
       <div
-        className={`relative overflow-hidden rounded-3xl border bg-white/5 transition-all duration-300 ${
+        className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${
           isFocused
-            ? 'border-pink-500/50 shadow-lg shadow-pink-500/20'
+            ? 'border-purple-500/60 shadow-lg shadow-purple-500/20'
             : 'border-white/10'
         }`}
+        style={{ backgroundColor: '#1e1e1e' }}
       >
         <textarea
           value={value}
@@ -30,24 +31,29 @@ export function TextInput({ value, onChange }: TextInputProps) {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder="Type your text here..."
-          className="min-h-[140px] w-full resize-none bg-transparent p-5 text-lg text-white placeholder-zinc-500 outline-none"
+          className="min-h-[120px] w-full resize-none border-0 bg-transparent p-5 text-lg text-[#f0f0f0] placeholder-zinc-500 outline-none"
           maxLength={500}
+          style={{ backgroundColor: 'transparent' }}
         />
 
         {value && (
           <button
             onClick={handleClear}
-            className="absolute right-4 top-4 rounded-full bg-white/10 p-1.5 text-zinc-400 transition-all duration-200 hover:bg-white/20 hover:text-white"
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-zinc-400 transition-all duration-200 hover:bg-white/20 hover:text-white"
+            aria-label="Clear text"
           >
             <X className="h-4 w-4" />
           </button>
         )}
       </div>
 
-      <div className="mt-2 flex items-center justify-between px-1">
-        <span className="text-xs text-zinc-500">
-          {value.length > 0 && 'Live preview below'}
-        </span>
+      <div className="mt-3 flex items-center justify-between px-1">
+        <div className="flex items-center gap-2">
+          <Type className="h-4 w-4 text-zinc-500" />
+          <span className="text-xs text-zinc-500">
+            {value.length > 0 ? 'Live preview below' : 'Start typing to see previews'}
+          </span>
+        </div>
         <span className="text-xs text-zinc-600">
           {value.length}/500
         </span>
