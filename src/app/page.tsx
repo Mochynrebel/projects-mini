@@ -5,6 +5,8 @@ import { Sparkles, Type, Wand2, Copy } from 'lucide-react';
 import { TextInput } from '@/components/TextInput';
 import { FontGrid } from '@/components/FontGrid';
 import { CopyToast } from '@/components/CopyToast';
+import { AdBanner } from '@/components/AdBanner';
+import { MobileAnchorAd } from '@/components/MobileAnchorAd';
 import { fontStyles } from '@/lib/fonts';
 
 export default function Home() {
@@ -21,7 +23,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden pb-20 md:pb-0">
       {/* Background gradient orbs */}
       <div className="gradient-orb gradient-orb-purple fixed -left-60 -top-60 h-[500px] w-[500px]" />
       <div className="gradient-orb gradient-orb-pink fixed -bottom-60 -right-60 h-[500px] w-[500px]" />
@@ -45,6 +47,11 @@ export default function Home() {
         </header>
 
         <main className="mx-auto max-w-6xl px-4 py-10">
+          {/* Top Banner Ad */}
+          <div className="mb-8">
+            <AdBanner id="ad-top" size="leaderboard" />
+          </div>
+
           {/* Hero Section */}
           <section className="mb-10 text-center">
             <p className="mb-6 text-sm text-zinc-400 sm:text-base">
@@ -99,7 +106,7 @@ export default function Home() {
                     <h3 className="mb-2 text-lg font-semibold text-[#f0f0f0]">
                       {step.title}
                     </h3>
-                    <p className="text-sm text-zinc-400">
+                    <p className="text-sm text-zinc-500">
                       {step.description}
                     </p>
                   </div>
@@ -110,48 +117,47 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section className="border-t border-white/5 bg-black/20 py-16 backdrop-blur-xl">
+        <section className="border-t border-white/5 py-16">
           <div className="mx-auto max-w-4xl px-4">
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <Sparkles className="h-5 w-5 text-purple-400" />
-              <h2 className="text-2xl font-bold text-[#f0f0f0]">
-                About Unicode Fonts
-              </h2>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 p-6" style={{ backgroundColor: '#1e1e1e' }}>
-              <div className="prose prose-invert prose-sm max-w-none space-y-4 text-zinc-300">
-                <p>
-                  Unicode is a universal character encoding standard that assigns a unique number to every character, regardless of platform, program, or language. While most people only see basic Latin letters (A-Z, a-z), Unicode actually includes thousands of different character sets from languages around the world.
-                </p>
-                <p>
-                  <strong className="text-[#f0f0f0]">How it works:</strong> Each Unicode font style you see below uses a different block of Unicode characters. For example, the bold letters use the &quot;Mathematical Alphanumeric Symbols&quot; block (U+1D400 to U+1D7FF), while the circled letters use enclosed alphanumeric characters (U+2460 to U+24FF).
-                </p>
-                <p>
-                  <strong className="text-[#f0f0f0]">Compatibility:</strong> Since these are standard Unicode characters, they work in most apps and platforms that support Unicode text — including Instagram, TikTok, Twitter, Discord, and more. No special fonts or plugins needed!
-                </p>
-                <p>
-                  <strong className="text-[#f0f0f0]">Tip:</strong> Not all Unicode characters are supported everywhere. If a character shows up as a box or question mark, that platform does not support that particular Unicode block.
-                </p>
-              </div>
+            <h2 className="mb-6 text-center text-2xl font-bold text-[#f0f0f0]">
+              About Unicode Fonts
+            </h2>
+            <div className="rounded-2xl border border-white/5 bg-white/5 p-6 backdrop-blur-sm">
+              <p className="mb-4 text-sm leading-relaxed text-zinc-400">
+                Unicode is a universal character encoding standard that supports over 143,000 characters from 154 scripts. Each Unicode character has a unique code point that can be displayed using different fonts and styles.
+              </p>
+              <p className="mb-4 text-sm leading-relaxed text-zinc-400">
+                Our font generator uses Unicode mathematical alphanumeric symbols to transform your regular text into stylized versions. These symbols are supported by most modern devices and browsers, making your text appear in unique styles on social media platforms.
+              </p>
+              <p className="text-sm leading-relaxed text-zinc-400">
+                Simply type your text, choose a style you like, and copy it to use in your Instagram bio, TikTok captions, Twitter posts, or anywhere else you want to stand out!
+              </p>
             </div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-white/5 bg-black/40 py-8">
+        <footer className="border-t border-white/5 bg-black/30 py-8 backdrop-blur-xl">
           <div className="mx-auto max-w-4xl px-4 text-center">
+            <div className="mb-4 flex items-center justify-center gap-2">
+              <Sparkles className="h-5 w-5 text-purple-400" />
+              <span className="gradient-text font-bold">Viral Fonts</span>
+            </div>
             <p className="text-sm text-zinc-500">
-              &copy; {new Date().getFullYear()} Viral Fonts. Made with love for creative minds.
+              Create unique text styles for social media. No signup required.
             </p>
-            <p className="mt-2 text-xs text-zinc-600">
-              Create stunning text for your social media bios, captions, and stories.
+            <p className="mt-4 text-xs text-zinc-600">
+              © {new Date().getFullYear()} Viral Fonts. All rights reserved.
             </p>
           </div>
         </footer>
-
-        <CopyToast show={showToast} />
       </div>
+
+      {/* Mobile Anchor Ad */}
+      <MobileAnchorAd />
+
+      {/* Copy Toast */}
+      <CopyToast show={showToast} onClose={() => setShowToast(false)} />
     </div>
   );
 }
