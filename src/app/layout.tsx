@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+const googleTagInlineScript = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-M8WE2GN3LY');`;
+
 export const metadata: Metadata = {
   title: {
     default: 'Small Text Generator | Copy & Paste for X & IG | Tiny Fonts Online',
@@ -48,7 +54,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-M8WE2GN3LY"
+        />
+        <script dangerouslySetInnerHTML={{ __html: googleTagInlineScript }} />
+        {children}
+      </body>
     </html>
   );
 }
