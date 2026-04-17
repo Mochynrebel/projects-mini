@@ -39,10 +39,10 @@ export default function Home() {
         {/* Header */}
         <header className="text-center pt-12 pb-8 px-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-3">
-            Small Text Generator – Copy & Paste Tiny Fonts for X and IG
+            Viral Fonts
           </h1>
           <p className="text-white/60 text-lg sm:text-xl">
-            Free Small Text Generator Online: Create Small Caps, Superscript & More
+            Create unique bios with one click
           </p>
         </header>
 
@@ -84,9 +84,9 @@ export default function Home() {
                 {fontStyles.length} Styles
               </span>
             </h2>
-            <p className="text-sm text-white/40">
+            <span className="text-sm text-white/40">
               Click any style to copy
-            </p>
+            </span>
           </div>
           <FontGrid inputText={inputText} onCopy={handleCopy} />
         </section>
