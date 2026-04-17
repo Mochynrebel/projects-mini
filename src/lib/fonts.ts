@@ -1,4 +1,4 @@
-// Viral Fonts - Complete Unicode Font Mapping
+// Small Text Generator - Complete Unicode Font Mapping
 // 52 font styles with full a-z, A-Z, 0-9 mappings
 // Part 1/4 - Type definitions and basic mathematical styles
 

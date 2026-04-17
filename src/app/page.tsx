@@ -39,10 +39,10 @@ export default function Home() {
         {/* Header */}
         <header className="text-center pt-12 pb-8 px-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-3">
-            Viral Fonts
+            Small Text Generator
           </h1>
           <p className="text-white/60 text-lg sm:text-xl">
-            Create unique bios with one click
+            Copy & Paste Tiny Fonts for X and IG
           </p>
         </header>
 
@@ -79,14 +79,14 @@ export default function Home() {
         {/* Font Styles Section */}
         <section className="max-w-7xl mx-auto px-4 mb-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-white">
+            <h3 className="text-xl font-bold text-white">
               <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">
                 {fontStyles.length} Styles
               </span>
-            </h2>
-            <span className="text-sm text-white/40">
+            </h3>
+            <p className="text-sm text-white/40">
               Click any style to copy
-            </span>
+            </p>
           </div>
           <FontGrid inputText={inputText} onCopy={handleCopy} />
         </section>
@@ -156,7 +156,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="border-t border-white/[0.05] py-8 text-center">
           <p className="text-white/40 text-sm">
-            &copy; {new Date().getFullYear()} Viral Fonts. Made with love for social media enthusiasts.
+            &copy; {new Date().getFullYear()} Small Text Generator. Made with love for social media enthusiasts.
           </p>
         </footer>
       </main>
