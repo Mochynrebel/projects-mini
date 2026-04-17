@@ -11,6 +11,8 @@
     "ts-check": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.0", 
+    "postcss": "^8.4.0",
     "@aws-sdk/client-s3": "^3.958.0",
     "@aws-sdk/lib-storage": "^3.958.0",
     "@hookform/resolvers": "^5.2.2",
