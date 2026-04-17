@@ -35,11 +35,13 @@ export default function FontCard({ styleName, convertedText, onCopy }: FontCardP
       onClick={handleCopy}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          handleCopy(e as unknown as React.MouseEvent);
-        }
-      }}
+onKeyDown={(e) => {
+  // 只保留了 Enter 键（为了网页的无障碍标准），删掉了空格键触发
+  if (e.key === 'Enter') {
+    // 补全了 <HTMLDivElement> 类型，解决 TypeScript 报错
+    handleCopy(e as unknown as React.MouseEvent<HTMLDivElement>);
+  }
+}}
       aria-label={`Copy ${styleName} style: ${convertedText}`}
     >
       {/* Style Name */}
