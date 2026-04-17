@@ -1,137 +1,165 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { Header } from '@/components/Header';
-import { TextInput } from '@/components/TextInput';
-import { FontGrid } from '@/components/FontGrid';
-import { HowToSection } from '@/components/HowToSection';
-import { AboutSection } from '@/components/AboutSection';
-import { Footer } from '@/components/Footer';
 import { fontStyles } from '@/lib/fonts';
+import FontGrid from '@/components/FontGrid';
 
-const INITIAL_DISPLAY_COUNT = 12;
-const LOAD_MORE_COUNT = 8;
+const DEFAULT_TEXT = 'i love type';
 
 export default function Home() {
-  const [inputText, setInputText] = useState('');
-  const [visibleCount, setVisibleCount] = useState(INITIAL_DISPLAY_COUNT);
-  const [tooltip, setTooltip] = useState<{ show: boolean; position: { x: number; y: number } }>({
-    show: false,
-    position: { x: 0, y: 0 },
-  });
+  const [inputText, setInputText] = useState(DEFAULT_TEXT);
 
-  const handleCopy = useCallback((position: { x: number; y: number }) => {
-    setTooltip({ show: true, position });
-    setTimeout(() => {
-      setTooltip((prev) => ({ ...prev, show: false }));
-    }, 1000);
+  const handleCopy = useCallback(async (text: string, event: React.MouseEvent) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    }
   }, []);
-
-  const handleLoadMore = useCallback(() => {
-    setVisibleCount((prev) => Math.min(prev + LOAD_MORE_COUNT, fontStyles.length));
-  }, []);
-
-  const hasMoreStyles = visibleCount < fontStyles.length;
 
   return (
-    <div className="relative min-h-screen overflow-hidden pb-20 sm:pb-0">
-      {/* Background gradient orbs */}
-      <div className="gradient-orb gradient-orb-pink fixed -left-40 -top-40 h-96 w-96" />
-      <div className="gradient-orb gradient-orb-orange fixed -bottom-40 -right-40 h-96 w-96" />
-      <div className="gradient-orb gradient-orb-pink fixed left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2" />
-
-      {/* Content */}
-      <div className="relative z-10">
-        <Header />
-
-        <main className="mx-auto max-w-3xl px-4 py-10">
-          {/* Top Banner Ad */}
-          <div
-            id="ad-top"
-            className="mb-8 flex h-[90px] w-full items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-white/5 backdrop-blur-xl"
-          >
-            <div className="text-center">
-              <p className="text-xs text-zinc-500">Advertisement</p>
-              <p className="text-sm font-medium text-zinc-600">ad-top (728x90)</p>
-            </div>
-          </div>
-
-          {/* Hero Section */}
-          <section className="mb-12 text-center">
-            <p className="mb-6 text-sm text-zinc-400 sm:text-base">
-              Transform your text into 50+ unique font styles. Click any style to copy instantly.
-            </p>
-            <TextInput value={inputText} onChange={setInputText} />
-          </section>
-
-          {/* Font Grid */}
-          <section className="mb-8">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">Font Styles</h2>
-              <span className="text-xs text-zinc-500">{fontStyles.length} styles available</span>
-            </div>
-            <FontGrid
-              inputText={inputText}
-              visibleCount={visibleCount}
-              onCopy={handleCopy}
-            />
-          </section>
-
-          {/* Load More Button */}
-          {hasMoreStyles && (
-            <div className="mb-8 flex justify-center">
-              <button
-                onClick={handleLoadMore}
-                className="rounded-xl border border-white/10 bg-white/5 px-8 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-white/10 hover:border-white/20"
-              >
-                Load More ({Math.min(LOAD_MORE_COUNT, fontStyles.length - visibleCount)} more styles)
-              </button>
-            </div>
-          )}
-
-          {/* Bottom Ad */}
-          <div
-            id="ad-bottom"
-            className="mb-8 flex h-[250px] w-full items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-white/5 backdrop-blur-xl sm:h-[90px]"
-          >
-            <div className="text-center">
-              <p className="text-xs text-zinc-500">Advertisement</p>
-              <p className="text-sm font-medium text-zinc-600">ad-bottom (728x90 or 300x250)</p>
-            </div>
-          </div>
-        </main>
-
-        <HowToSection />
-        <AboutSection />
-        <Footer />
-
-        {/* Copy Tooltip */}
-        {tooltip.show && (
-          <div
-            className="fixed z-50 pointer-events-none animate-tooltip-fade"
-            style={{
-              left: tooltip.position.x,
-              top: tooltip.position.y - 45,
-              transform: 'translateX(-50%)',
-            }}
-          >
-            <div className="rounded-full border border-white/20 bg-black/90 px-4 py-2 text-sm font-medium text-white shadow-xl backdrop-blur-xl">
-              已复制!
-            </div>
-          </div>
-        )}
-
-        {/* Mobile Anchor Ad */}
-        <div
-          id="ad-mobile-anchor"
-          className="fixed bottom-0 left-0 right-0 z-[1000] flex h-[60px] items-center justify-center border-t border-white/10 bg-black/90 backdrop-blur-xl sm:hidden"
-        >
-          <div className="text-center">
-            <p className="text-xs text-zinc-500">Advertisement</p>
-            <p className="text-xs font-medium text-zinc-600">ad-mobile-anchor (320x50)</p>
-          </div>
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
+      {/* Fixed Mobile Ad Anchor */}
+      <div id="ad-mobile-anchor" className="md:hidden fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-lg z-50 p-2 text-center border-t border-white/10">
+        <div className="bg-white/5 border border-dashed border-white/20 rounded-lg min-h-[50px] flex items-center justify-center">
+          <span className="text-white/40 text-xs">Mobile Anchor: 320x50</span>
         </div>
       </div>
+
+      {/* Main Content */}
+      <main className="relative pb-20 md:pb-8">
+        {/* Header */}
+        <header className="text-center pt-12 pb-8 px-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-3">
+            Viral Fonts
+          </h1>
+          <p className="text-white/60 text-lg sm:text-xl">
+            Create unique bios with one click
+          </p>
+        </header>
+
+        {/* Top Ad Banner */}
+        <div id="ad-top" className="max-w-4xl mx-auto px-4 mb-8">
+          <div className="bg-white/[0.02] border-2 border-dashed border-white/[0.1] rounded-xl min-h-[90px] flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-white/40 text-sm font-medium mb-1">Advertisement</div>
+              <div className="text-white/20 text-xs">728x90 / Responsive</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Text Input Section */}
+        <section className="max-w-4xl mx-auto px-4 mb-12">
+          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <label htmlFor="text-input" className="block text-sm font-medium text-white/50 mb-3 uppercase tracking-wider">
+              Enter your text
+            </label>
+            <textarea
+              id="text-input"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Type something..."
+              className="w-full bg-white/[0.05] border border-white/[0.1] rounded-2xl p-4 sm:p-5 text-white text-lg sm:text-xl placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300 resize-none"
+              rows={2}
+            />
+            <div className="mt-3 text-xs text-white/30 text-right">
+              {inputText.length} characters
+            </div>
+          </div>
+        </section>
+
+        {/* Font Styles Section */}
+        <section className="max-w-7xl mx-auto px-4 mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-white">
+              <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">
+                {fontStyles.length} Styles
+              </span>
+            </h2>
+            <span className="text-sm text-white/40">
+              Click any style to copy
+            </span>
+          </div>
+          <FontGrid inputText={inputText} onCopy={handleCopy} />
+        </section>
+
+        {/* Bottom Ad */}
+        <div id="ad-bottom" className="max-w-4xl mx-auto px-4 mb-12">
+          <div className="bg-white/[0.02] border-2 border-dashed border-white/[0.1] rounded-xl min-h-[250px] sm:min-h-[90px] flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-white/40 text-sm font-medium mb-1">Advertisement</div>
+              <div className="text-white/20 text-xs">728x90 or 300x250</div>
+            </div>
+          </div>
+        </div>
+
+        {/* How to Use Section */}
+        <section className="max-w-4xl mx-auto px-4 mb-16">
+          <h2 className="text-2xl font-bold text-center mb-8">
+            <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">
+              How to Use
+            </span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              { step: '1', title: 'Type', desc: 'Enter your text in the input box above' },
+              { step: '2', title: 'Generate', desc: 'See your text transformed into unique fonts instantly' },
+              { step: '3', title: 'Copy', desc: 'Click on any style to copy it to your clipboard' },
+            ].map((item) => (
+              <div
+                key={item.step}
+                className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 text-center hover:bg-white/[0.05] transition-all duration-300"
+              >
+                <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-pink-500 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+                <p className="text-white/50 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* About Unicode Section */}
+        <section className="max-w-4xl mx-auto px-4 mb-16">
+          <h2 className="text-2xl font-bold text-center mb-8">
+            <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">
+              About Unicode Fonts
+            </span>
+          </h2>
+          <div className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 sm:p-8">
+            <p className="text-white/70 leading-relaxed mb-4">
+              Unicode is a universal character encoding standard that assigns a unique number to every character, 
+              regardless of the platform, program, or language. Our font generator uses Unicode&apos;s Mathematical 
+              Alphanumeric Symbols block (U+1D400 to U+1D7FF) to transform your regular text into stylized versions.
+            </p>
+            <p className="text-white/70 leading-relaxed mb-4">
+              These stylized characters work in most modern browsers and apps, including Instagram, TikTok, 
+              Twitter, Discord, and more. They&apos;re perfect for making your social media bios, captions, 
+              and messages stand out from the crowd.
+            </p>
+            <p className="text-white/50 text-sm">
+              Note: Some platforms may not support all Unicode characters. If a character doesn&apos;t display 
+              correctly, try a different style or device.
+            </p>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="border-t border-white/[0.05] py-8 text-center">
+          <p className="text-white/40 text-sm">
+            &copy; {new Date().getFullYear()} Viral Fonts. Made with love for social media enthusiasts.
+          </p>
+        </footer>
+      </main>
     </div>
   );
 }

@@ -3,131 +3,80 @@
 import { useState, useCallback, useRef } from 'react';
 
 interface FontCardProps {
-  styleId: string;
   styleName: string;
-  category: string;
-  previewText: string;
   convertedText: string;
-  onCopy: (position: { x: number; y: number }) => void;
-  animationDelay?: number;
+  onCopy: (text: string, event: React.MouseEvent) => void;
 }
 
-export function FontCard({
-  styleId,
-  styleName,
-  category,
-  previewText,
-  convertedText,
-  onCopy,
-  animationDelay = 0,
-}: FontCardProps) {
-  const [copied, setCopied] = useState(false);
-  const previewRef = useRef<HTMLDivElement>(null);
+export default function FontCard({ styleName, convertedText, onCopy }: FontCardProps) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleCopy = useCallback(async (e: React.MouseEvent) => {
-    if (!convertedText) return;
-
-    const rect = previewRef.current?.getBoundingClientRect();
-    const position = {
-      x: rect ? rect.left + rect.width / 2 : e.clientX,
-      y: rect ? rect.top : e.clientY,
-    };
-
-    try {
-      await navigator.clipboard.writeText(convertedText);
-    } catch {
-      // Fallback for older browsers
-      const textarea = document.createElement('textarea');
-      textarea.value = convertedText;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-    }
-
-    setCopied(true);
-    onCopy(position);
-    setTimeout(() => setCopied(false), 1000);
-  }, [convertedText, onCopy]);
+  const handleCopy = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      const rect = e.currentTarget.getBoundingClientRect();
+      setTooltipPosition({
+        x: rect.left + rect.width / 2,
+        y: rect.top,
+      });
+      onCopy(convertedText, e);
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 1000);
+    },
+    [convertedText, onCopy]
+  );
 
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-lg hover:shadow-pink-500/10"
-      style={{ animationDelay: `${animationDelay}ms` }}
+      ref={cardRef}
+      className="group relative bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-4 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02] cursor-pointer"
+      onClick={handleCopy}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleCopy(e as unknown as React.MouseEvent);
+        }
+      }}
+      aria-label={`Copy ${styleName} style: ${convertedText}`}
     >
-      {/* Category badge */}
-      <div className="mb-3 flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">
-          {category}
-        </span>
-        {copied && (
-          <span className="flex items-center gap-1 text-xs text-emerald-400">
-            <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            已复制
-          </span>
-        )}
+      {/* Style Name */}
+      <div className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3">
+        {styleName}
       </div>
 
-      {/* Clickable preview area */}
-      <div
-        ref={previewRef}
-        onClick={handleCopy}
-        className={`mb-3 min-h-[60px] cursor-pointer overflow-x-auto rounded-xl p-3 transition-all duration-200 ${
-          copied
-            ? 'bg-emerald-500/20 ring-1 ring-emerald-500/50'
-            : 'bg-black/20 hover:bg-white/5 hover:ring-1 hover:ring-white/10'
-        }`}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handleCopy(e as unknown as React.MouseEvent);
-          }
-        }}
-      >
-        <p className="text-xl leading-relaxed text-white/90 whitespace-nowrap select-none">
-          {previewText}
+      {/* Converted Text Preview - Clickable */}
+      <div className="min-h-[48px] flex items-center justify-center">
+        <p
+          className="text-xl sm:text-2xl text-white text-center leading-relaxed break-all select-none transition-transform duration-200 group-hover:scale-[1.02]"
+          style={{ wordBreak: 'break-word' }}
+        >
+          {convertedText || 'Type text above...'}
         </p>
       </div>
 
-      {/* Style name */}
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-zinc-300">
-          {styleName}
-        </span>
-        <span className="text-xs text-zinc-600">
-          点击复制
-        </span>
+      {/* Click Hint */}
+      <div className="absolute bottom-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <span className="text-xs text-white/30">tap to copy</span>
       </div>
-    </div>
-  );
-}
 
-// Floating tooltip component for copy feedback
-interface CopyTooltipProps {
-  show: boolean;
-  position: { x: number; y: number };
-}
-
-export function CopyTooltip({ show, position }: CopyTooltipProps) {
-  if (!show) return null;
-
-  return (
-    <div
-      className="fixed z-50 pointer-events-none animate-tooltip-fade"
-      style={{
-        left: position.x,
-        top: position.y - 40,
-        transform: 'translateX(-50%)',
-      }}
-    >
-      <div className="rounded-full border border-white/20 bg-black/90 px-4 py-2 text-sm font-medium text-white shadow-lg backdrop-blur-xl">
-        已复制!
-      </div>
+      {/* Tooltip - Shows on click */}
+      {showTooltip && (
+        <div
+          className="fixed z-50 pointer-events-none animate-fade-in-out"
+          style={{
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y - 40}px`,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <div className="bg-gradient-to-r from-pink-500 to-orange-400 text-white text-sm font-semibold px-4 py-2 rounded-full shadow-lg whitespace-nowrap">
+            已复制!
+          </div>
+        </div>
+      )}
     </div>
   );
 }

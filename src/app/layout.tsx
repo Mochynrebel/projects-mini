@@ -4,11 +4,11 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Viral Fonts - Free Unicode Font Generator for Social Media',
-    template: '%s | Viral Fonts',
+    default: 'Small Text Generator | Copy & Paste for X & IG | Tiny Fonts Online',
+    template: '%s | Small Text Generator',
   },
   description:
-    'Create unique, eye-catching fonts for Instagram, TikTok, and more. 12+ styles, instant copy & paste. No signup required.',
+    'Free Small Text Generator: create tiny fonts, small caps, and superscript. Copy and paste instantly for X (Twitter), Instagram, and more. No signup required.',
   keywords: [
     'unicode fonts',
     'fancy text generator',
@@ -20,21 +20,21 @@ export const metadata: Metadata = {
     'bio fonts',
     'social media fonts',
   ],
-  authors: [{ name: 'Viral Fonts' }],
+  authors: [{ name: 'Small Text Generator' }],
   openGraph: {
-    title: 'Viral Fonts - Free Unicode Font Generator',
+    title: 'Small Text Generator | Tiny Fonts Online',
     description:
-      'Create unique, eye-catching fonts for Instagram, TikTok, and more. 12+ styles, instant copy & paste.',
+      'Free Small Text Generator: create tiny fonts, small caps, and superscript. Copy and paste instantly for X (Twitter), Instagram, and more.',
     url: '/',
-    siteName: 'Viral Fonts',
+    siteName: 'Small Text Generator',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Viral Fonts - Free Unicode Font Generator',
+    title: 'Small Text Generator | Tiny Fonts Online',
     description:
-      'Create unique, eye-catching fonts for Instagram, TikTok, and more.',
+      'Free Small Text Generator: create tiny fonts, small caps, and superscript. Copy and paste instantly for X (Twitter), Instagram, and more.',
   },
   robots: {
     index: true,

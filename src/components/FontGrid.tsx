@@ -1,65 +1,103 @@
 'use client';
 
-import { useCallback } from 'react';
-import { FontCard } from './FontCard';
-import { fontStyles, convertText } from '@/lib/fonts';
+import { useState, useMemo, useCallback } from 'react';
+import { fontStyles, convertText, FontStyleDef } from '@/lib/fonts';
+import FontCard from './FontCard';
 
 interface FontGridProps {
   inputText: string;
-  visibleCount: number;
-  onCopy: (position: { x: number; y: number }) => void;
+  onCopy: (text: string, event: React.MouseEvent) => void;
 }
 
-export function FontGrid({ inputText, visibleCount, onCopy }: FontGridProps) {
-  const handleCopy = useCallback((position: { x: number; y: number }) => {
-    onCopy(position);
-  }, [onCopy]);
+const INITIAL_COUNT = 8;
+const LOAD_MORE_COUNT = 5;
 
-  const displayText = inputText.trim() || '';
-  const visibleStyles = fontStyles.slice(0, visibleCount);
+export default function FontGrid({ inputText, onCopy }: FontGridProps) {
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
-  // Insert ad-infeed after 6th style when there are 12+ styles
-  const insertAdIndex = 6;
-  const showAdInfeed = visibleCount >= 12;
+  // Calculate converted texts
+  const convertedTexts = useMemo(() => {
+    const texts: Record<string, string> = {};
+    fontStyles.forEach((style) => {
+      texts[style.id] = convertText(inputText, style.mapping);
+    });
+    return texts;
+  }, [inputText]);
+
+  // Get visible styles
+  const visibleStyles = useMemo(() => {
+    return fontStyles.slice(0, visibleCount);
+  }, [visibleCount]);
+
+  // Determine if we should show ad-infeed
+  const showAdInfeed = visibleCount >= 12 && !hasLoadedMore;
+
+  // Get items to render with ad placement
+  const renderItems = useMemo(() => {
+    const items: (FontStyleDef | { type: 'ad'; id: string })[] = [];
+    let adInserted = false;
+
+    visibleStyles.forEach((style, index) => {
+      // Insert ad after 6th item (between 6 and 7)
+      if (showAdInfeed && index === 6 && !adInserted) {
+        items.push({ type: 'ad', id: 'ad-infeed' });
+        adInserted = true;
+      }
+      items.push(style);
+    });
+
+    return items;
+  }, [visibleStyles, showAdInfeed]);
+
+  const handleLoadMore = useCallback(() => {
+    setVisibleCount((prev) => prev + LOAD_MORE_COUNT);
+    setHasLoadedMore(true);
+  }, []);
+
+  const hasMore = visibleCount < fontStyles.length;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      {visibleStyles.map((style, index) => {
-        // Insert ad card after 6th item
-        if (index === insertAdIndex && showAdInfeed) {
-          return (
-            <div key={`ad-wrapper-${index}`} className="col-span-full">
+    <div className="space-y-6">
+      {/* Font Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {renderItems.map((item) => {
+          if ('type' in item && item.type === 'ad') {
+            return (
               <div
-                id="ad-infeed"
-                className="flex h-[100px] w-full items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-white/5 backdrop-blur-xl"
+                key={item.id}
+                id={item.id}
+                className="bg-white/[0.02] border-2 border-dashed border-white/[0.1] rounded-2xl p-8 flex flex-col items-center justify-center min-h-[120px]"
               >
-                <div className="text-center">
-                  <p className="text-xs text-zinc-500">Advertisement</p>
-                  <p className="text-sm font-medium text-zinc-600">ad-infeed</p>
-                </div>
+                <div className="text-white/40 text-sm font-medium mb-2">Advertisement</div>
+                <div className="text-white/20 text-xs">728x90 / Responsive</div>
               </div>
-            </div>
-          );
-        }
+            );
+          }
 
-        return (
-          <div
-            key={style.id}
-            className="animate-in fade-in slide-in-from-bottom-4"
-            style={{ animationDelay: `${index * 30}ms`, animationFillMode: 'both' }}
-          >
+          const style = item as FontStyleDef;
+          return (
             <FontCard
-              styleId={style.id}
+              key={style.id}
               styleName={style.name}
-              category={style.category}
-              previewText={displayText || '点击复制文字'}
-              convertedText={displayText}
-              onCopy={handleCopy}
-              animationDelay={0}
+              convertedText={convertedTexts[style.id] || ''}
+              onCopy={onCopy}
             />
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+
+      {/* Load More Button */}
+      {hasMore && (
+        <div className="flex justify-center pt-4">
+          <button
+            onClick={handleLoadMore}
+            className="px-8 py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] hover:border-white/[0.2] rounded-full text-white/70 hover:text-white transition-all duration-300 font-medium"
+          >
+            Load More ({Math.min(LOAD_MORE_COUNT, fontStyles.length - visibleCount)} of {fontStyles.length - visibleCount} remaining)
+          </button>
+        </div>
+      )}
     </div>
   );
 }
