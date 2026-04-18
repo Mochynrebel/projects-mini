@@ -188,7 +188,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 px-5 text-sm font-semibold text-white shadow-lg shadow-pink-500/20 transition-transform hover:scale-[1.01] hover:from-pink-400 hover:to-orange-300"
               >
                 <Dice5 className="h-4 w-4" />
-                随机字体
+                Random Font
               </Button>
             </div>
             <textarea
@@ -201,7 +201,7 @@ export default function Home() {
             />
             <div className="mt-3 flex items-center justify-between gap-3 text-xs">
               <span className="text-white/40">
-                Pick any card below or use 随机字体 for an instant surprise.
+                Pick any card below or use Random Font for an instant surprise.
               </span>
               <span className="text-right text-white/30">{inputText.length} characters</span>
             </div>
