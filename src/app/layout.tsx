@@ -20,15 +20,14 @@ export const metadata: Metadata = {
   description:
     'Free Small Text Generator: create tiny fonts, small caps, and superscript. Copy and paste instantly for X (Twitter), Instagram, and more. No signup required.',
   keywords: [
-    'unicode fonts',
-    'fancy text generator',
-    'instagram fonts',
-    'tiktok fonts',
-    'text generator',
-    'stylish fonts',
-    'cool fonts',
-    'bio fonts',
+    'small text generator',
+    'tiny fonts',
+    'copy and paste fonts',
+    'Unicode font generator',
+    'stylish text generator',
     'social media fonts',
+    'fonts for Instagram',
+    'text styles online',
   ],
   authors: [{ name: 'Small Text Generator' }],
   openGraph: {
