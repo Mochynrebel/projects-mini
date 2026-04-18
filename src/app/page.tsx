@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import { fontStyles } from '@/lib/fonts';
 import FontGrid from '@/components/FontGrid';
@@ -38,6 +39,20 @@ export default function Home() {
       <main className="relative pb-20 md:pb-8">
         {/* Header */}
         <header className="text-center pt-12 pb-8 px-4">
+          <nav className="mb-6 flex items-center justify-center gap-3">
+            <Link
+              href="/"
+              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:border-pink-400/40 hover:text-white"
+            >
+              Generator
+            </Link>
+            <Link
+              href="/blog"
+              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:border-pink-400/40 hover:text-white"
+            >
+              Blog
+            </Link>
+          </nav>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-3">
             Small Text Generator
           </h1>
