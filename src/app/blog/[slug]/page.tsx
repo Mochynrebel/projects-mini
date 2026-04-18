@@ -36,6 +36,7 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    keywords: post.keywords,
     alternates: {
       canonical: `/blog/${post.slug}`,
     },
@@ -97,6 +98,64 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       {paragraph}
                     </p>
                   ))}
+                  {section.listItems ? (
+                    <ul className="space-y-3 pl-5 text-base leading-8 text-white/70 sm:text-lg">
+                      {section.listItems.map((item) => (
+                        <li key={item} className="list-disc marker:text-pink-300">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {section.subsections?.map((subsection) => (
+                    <div key={subsection.heading} className="pt-2">
+                      <h3 className="text-xl font-semibold text-white/95">
+                        {subsection.heading}
+                      </h3>
+                      <div className="mt-3 space-y-4">
+                        {subsection.paragraphs.map((paragraph) => (
+                          <p
+                            key={paragraph}
+                            className="text-base leading-8 text-white/70 sm:text-lg"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                        {subsection.listItems ? (
+                          <ul className="space-y-3 pl-5 text-base leading-8 text-white/70 sm:text-lg">
+                            {subsection.listItems.map((item) => (
+                              <li
+                                key={item}
+                                className="list-disc marker:text-pink-300"
+                              >
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
+                    </div>
+                  ))}
+                  {section.links ? (
+                    <div className="grid gap-3 pt-2">
+                      {section.links.map((link) => (
+                        <Link
+                          key={`${section.heading}-${link.href}`}
+                          href={link.href}
+                          target={link.external ? '_blank' : undefined}
+                          rel={link.external ? 'noreferrer' : undefined}
+                          className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-pink-400/40 hover:bg-white/[0.05]"
+                        >
+                          <span className="block text-sm font-semibold text-pink-300">
+                            {link.label}
+                          </span>
+                          <span className="mt-1 block text-sm leading-6 text-white/65">
+                            {link.description}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               </section>
             ))}
