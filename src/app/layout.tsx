@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getSiteUrl } from '@/lib/site';
 import './globals.css';
 
 const googleTagInlineScript = `window.dataLayer = window.dataLayer || [];
@@ -8,6 +9,7 @@ gtag('js', new Date());
 gtag('config', 'G-M8WE2GN3LY');`;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: 'Small Text Generator | Copy & Paste for X & IG | Tiny Fonts Online',
     template: '%s | Small Text Generator',
