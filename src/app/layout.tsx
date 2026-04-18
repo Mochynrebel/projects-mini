@@ -10,6 +10,9 @@ gtag('config', 'G-M8WE2GN3LY');`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: 'Small Text Generator | Copy & Paste for X & IG | Tiny Fonts Online',
     template: '%s | Small Text Generator',
