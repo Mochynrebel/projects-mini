@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: 'Small Text Generator | Copy & Paste for X & IG | Tiny Fonts Online',
+    default: 'Small Text Generator (𝒸𝑜𝓅𝓎 & 𝓅𝒶𝓈𝓉𝑒) | Tiny Fonts Online',
     template: '%s | Small Text Generator',
   },
   description:
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Small Text Generator' }],
   openGraph: {
-    title: 'Small Text Generator | Tiny Fonts Online',
+    title: 'Small Text Generator (𝒸𝑜𝓅𝓎 & 𝓅𝒶𝓈𝓉𝑒) | Tiny Fonts Online',
     description:
       'Free Small Text Generator: create tiny fonts, small caps, and superscript. Copy and paste instantly for X (Twitter), Instagram, and more.',
     url: '/',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Small Text Generator | Tiny Fonts Online',
+    title: 'Small Text Generator (𝒸𝑜𝓅𝓎 & 𝓅𝒶𝓈𝓉𝑒) | Tiny Fonts Online',
     description:
       'Free Small Text Generator: create tiny fonts, small caps, and superscript. Copy and paste instantly for X (Twitter), Instagram, and more.',
   },
