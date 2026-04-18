@@ -18,14 +18,24 @@ function buildMapFromStrings(
   target: string,
   seed?: Record<string, string>
 ): Record<string, string> {
-  if (source.length !== target.length) {
+  const sourceChars = Array.from(source);
+  const targetChars = Array.from(target);
+
+  if (sourceChars.length !== targetChars.length) {
     throw new Error('Source and target alphabets must have the same length.');
   }
 
   const mapping: Record<string, string> = { ...(seed ?? {}) };
 
-  for (let index = 0; index < source.length; index += 1) {
-    mapping[source[index] ?? ''] = target[index] ?? '';
+  for (let index = 0; index < sourceChars.length; index += 1) {
+    const sourceChar = sourceChars[index];
+    const targetChar = targetChars[index];
+
+    if (!sourceChar || !targetChar) {
+      continue;
+    }
+
+    mapping[sourceChar] = targetChar;
   }
 
   return mapping;
