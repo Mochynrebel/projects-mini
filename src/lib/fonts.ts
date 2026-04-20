@@ -509,7 +509,7 @@ const glitchMap = buildCombiningMap(['\u0338', '\u035c']);
 const runeMarkMap = buildCombiningMap('\u20db');
 const boxedCombiningMap = buildCombiningMap('\u20e3');
 
-export const fontStyles: FontStyleDef[] = [
+const baseFontStyles: FontStyleDef[] = [
   { id: 'bold', name: 'Bold', category: 'Math', mapping: buildRangeMap(0x1d41a, 0x1d400, 0x1d7ce) },
   { id: 'italic', name: 'Italic', category: 'Math', mapping: buildRangeMap(0x1d44e, 0x1d434) },
   { id: 'bold-italic', name: 'Bold Italic', category: 'Math', mapping: buildRangeMap(0x1d482, 0x1d468) },
@@ -575,6 +575,84 @@ export const fontStyles: FontStyleDef[] = [
   { id: 'rune-mark', name: 'Rune Mark', category: 'Combining', mapping: runeMarkMap },
   { id: 'boxed', name: 'Boxed', category: 'Combining', mapping: boxedCombiningMap },
 ];
+
+const fontStyleDisplayOrder = [
+  'sparkle-wrap',
+  'flame-wrap',
+  'ghost-wrap',
+  'rune-wrap',
+  'cloud-wrap',
+  'bolt-wrap',
+  'heart-wrap',
+  'diamond-wrap',
+  'star-wrap',
+  'wave-wrap',
+  'bubble-wrap',
+  'box-wrap',
+  'curly-wrap',
+  'angle-wrap',
+  'bracket-wrap',
+  'slash-wrap',
+  'dot-wrap',
+  'typewriter',
+  'glitch',
+  'sparkle',
+  'zigzag',
+  'rune-mark',
+  'boxed',
+  'x-above',
+  'arrow-above',
+  'left-arrow',
+  'double-overline',
+  'double-underline',
+  'overline',
+  'underline',
+  'strikethrough',
+  'slash',
+  'tilde',
+  'dot-above',
+  'diaeresis',
+  'ring-above',
+  'caron',
+  'acute',
+  'grave',
+  'bridge',
+  'circled',
+  'negative-circled',
+  'squared',
+  'parenthesized',
+  'upside-down',
+  'mirrored',
+  'regional',
+  'fullwidth',
+  'small-caps',
+  'superscript',
+  'subscript',
+  'script',
+  'bold-script',
+  'fraktur',
+  'bold-fraktur',
+  'double-struck',
+  'bold-italic',
+  'sans-serif-bold-italic',
+  'sans-serif-italic',
+  'sans-serif-bold',
+  'italic',
+  'bold',
+  'sans-serif',
+  'monospace',
+] as const;
+
+const fontStyleRank = new Map<string, number>(
+  fontStyleDisplayOrder.map((styleId, index) => [styleId, index])
+);
+
+export const fontStyles: FontStyleDef[] = [...baseFontStyles].sort((left, right) => {
+  const leftRank = fontStyleRank.get(left.id) ?? Number.MAX_SAFE_INTEGER;
+  const rightRank = fontStyleRank.get(right.id) ?? Number.MAX_SAFE_INTEGER;
+
+  return leftRank - rightRank;
+});
 
 if (fontStyles.length < 50) {
   throw new Error('Expected at least 50 font styles.');
