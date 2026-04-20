@@ -124,6 +124,14 @@ function buildCombiningMap(
   return mapping;
 }
 
+function buildAboveCombiningMap(mark: string): Record<string, string> {
+  return {
+    ...buildCombiningMap(mark),
+    i: `ı${mark}`,
+    j: `ȷ${mark}`,
+  };
+}
+
 function buildEnclosedMap(baseCodePoint: number, zeroCodePoint?: number): Record<string, string> {
   const mapping: Record<string, string> = { ' ': ' ' };
 
@@ -486,6 +494,36 @@ const sparkleWrapMap = buildWrappedMap('✧', '✧');
 const boltWrapMap = buildWrappedMap('⚡', '⚡');
 const dotWrapMap = buildWrappedMap('•', '•');
 
+const scriptMap = {
+  ...buildRangeMap(0x1d4b6, 0x1d49c),
+  A: '𝒜',
+  B: 'ℬ',
+  C: '𝒞',
+  D: '𝒟',
+  E: 'ℰ',
+  F: 'ℱ',
+  G: '𝒢',
+  H: 'ℋ',
+  I: 'ℐ',
+  J: '𝒥',
+  K: '𝒦',
+  L: 'ℒ',
+  M: 'ℳ',
+  N: '𝒩',
+  O: '𝒪',
+  P: '𝒫',
+  Q: '𝒬',
+  R: 'ℛ',
+  S: '𝒮',
+  T: '𝒯',
+  U: '𝒰',
+  V: '𝒱',
+  W: '𝒲',
+  X: '𝒳',
+  Y: '𝒴',
+  Z: '𝒵',
+};
+
 const overlineMap = buildCombiningMap('\u0305');
 const doubleOverlineMap = buildCombiningMap('\u033f');
 const underlineMap = buildCombiningMap('\u0332');
@@ -493,8 +531,8 @@ const doubleUnderlineMap = buildCombiningMap('\u035f');
 const strikethroughMap = buildCombiningMap('\u0336');
 const slashMap = buildCombiningMap('\u0338');
 const xAboveMap = buildCombiningMap('\u033d');
-const arrowAboveMap = buildCombiningMap('\u20d7');
-const leftArrowAboveMap = buildCombiningMap('\u20d6');
+const arrowAboveMap = buildAboveCombiningMap('\u20d7');
+const leftArrowAboveMap = buildAboveCombiningMap('\u20d6');
 const tildeMap = buildCombiningMap('\u0330');
 const dotAboveMap = buildCombiningMap('\u0307');
 const diaeresisMap = buildCombiningMap('\u0308');
@@ -506,7 +544,7 @@ const bridgeMap = buildCombiningMap('\u0346');
 const zigzagMap = buildCombiningMap('\u035b');
 const sparkleMap = buildCombiningMap(['\u035e', '\u0334']);
 const glitchMap = buildCombiningMap(['\u0338', '\u035c']);
-const runeMarkMap = buildCombiningMap('\u20db');
+const runeMarkMap = buildAboveCombiningMap('\u20db');
 const boxedCombiningMap = buildCombiningMap('\u20e3');
 
 const baseFontStyles: FontStyleDef[] = [
@@ -519,7 +557,7 @@ const baseFontStyles: FontStyleDef[] = [
   { id: 'sans-serif-italic', name: 'Sans Italic', category: 'Math', mapping: buildRangeMap(0x1d622, 0x1d608) },
   { id: 'sans-serif-bold-italic', name: 'Sans Bold Italic', category: 'Math', mapping: buildRangeMap(0x1d656, 0x1d63c) },
   { id: 'double-struck', name: 'Double Struck', category: 'Math', mapping: buildRangeMap(0x1d552, 0x1d538, 0x1d7d8) },
-  { id: 'script', name: 'Script', category: 'Math', mapping: buildRangeMap(0x1d4b6, 0x1d49c) },
+  { id: 'script', name: 'Script', category: 'Math', mapping: scriptMap },
   { id: 'bold-script', name: 'Bold Script', category: 'Math', mapping: buildRangeMap(0x1d4ea, 0x1d4d0) },
   { id: 'fraktur', name: 'Fraktur', category: 'Math', mapping: buildRangeMap(0x1d51e, 0x1d504) },
   { id: 'bold-fraktur', name: 'Bold Fraktur', category: 'Math', mapping: buildRangeMap(0x1d586, 0x1d56c) },
@@ -577,6 +615,16 @@ const baseFontStyles: FontStyleDef[] = [
 ];
 
 const fontStyleDisplayOrder = [
+  'bold-script',
+  'bold-fraktur',
+  'fraktur',
+  'double-struck',
+  'upside-down',
+  'negative-circled',
+  'squared',
+  'circled',
+  'slash',
+  'boxed',
   'sparkle-wrap',
   'flame-wrap',
   'ghost-wrap',
@@ -599,7 +647,6 @@ const fontStyleDisplayOrder = [
   'sparkle',
   'zigzag',
   'rune-mark',
-  'boxed',
   'x-above',
   'arrow-above',
   'left-arrow',
@@ -608,7 +655,6 @@ const fontStyleDisplayOrder = [
   'overline',
   'underline',
   'strikethrough',
-  'slash',
   'tilde',
   'dot-above',
   'diaeresis',
@@ -617,11 +663,7 @@ const fontStyleDisplayOrder = [
   'acute',
   'grave',
   'bridge',
-  'circled',
-  'negative-circled',
-  'squared',
   'parenthesized',
-  'upside-down',
   'mirrored',
   'regional',
   'fullwidth',
@@ -629,10 +671,6 @@ const fontStyleDisplayOrder = [
   'superscript',
   'subscript',
   'script',
-  'bold-script',
-  'fraktur',
-  'bold-fraktur',
-  'double-struck',
   'bold-italic',
   'sans-serif-bold-italic',
   'sans-serif-italic',

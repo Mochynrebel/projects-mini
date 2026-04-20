@@ -20,6 +20,9 @@ export default function FontCard({
   isCopied,
   onCopyStyle,
 }: FontCardProps) {
+  const hasTallGlyphs =
+    styleId === 'arrow-above' || styleId === 'left-arrow' || styleId === 'rune-mark';
+
   const handleClick = useCallback(() => {
     onCopyStyle(styleId);
   }, [onCopyStyle, styleId]);
@@ -62,9 +65,12 @@ export default function FontCard({
         ) : null}
       </div>
 
-      <div className="flex min-h-[64px] items-center justify-center">
+      <div className={cn('flex min-h-[64px] items-center justify-center', hasTallGlyphs && 'py-2')}>
         <p
-          className="text-center text-xl leading-relaxed text-white transition-transform duration-200 group-hover:scale-[1.02] sm:text-2xl"
+          className={cn(
+            'text-center text-xl leading-relaxed text-white transition-transform duration-200 group-hover:scale-[1.02] sm:text-2xl',
+            hasTallGlyphs && 'leading-[2.1]'
+          )}
           style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
         >
           {convertedText || 'Type text above...'}
